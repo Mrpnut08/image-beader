@@ -12,18 +12,23 @@ public class UnbeadedImage {
 	private BufferedImage image;
 	private String filepath;
 	
-	public UnbeadedImage(String filepath) throws IOException {
+	
+	public void loadImage(String filepath) throws IOException {
 		this.filepath = filepath;
-		this.loadImage();
+		this.reloadImage();
 	}
 	
-	private void loadImage() throws IOException {
-		File source = new File(this.filepath);
+	public void reloadImage() throws IOException{
 		
+		File source = new File(this.filepath);
 		this.image = ImageIO.read(source);
 	}
 	
 	public ImageIcon getImageIcon() {
 		return (new ImageIcon(this.image));
+	}
+	
+	public String getFilePath() {
+		return this.filepath;
 	}
 }
