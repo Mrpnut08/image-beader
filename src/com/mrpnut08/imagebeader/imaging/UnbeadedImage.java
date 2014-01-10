@@ -15,13 +15,12 @@ public class UnbeadedImage {
 	
 	public void loadImage(String filepath) throws IOException {
 		this.filepath = filepath;
-		this.reloadImage();
+		this.image = ImageIO.read(new File(filepath));
 	}
 	
-	public void reloadImage() throws IOException{
-		
-		File source = new File(this.filepath);
-		this.image = ImageIO.read(source);
+	public void loadImage(File file) throws IOException {
+		this.filepath = file.getAbsolutePath();
+		this.image = ImageIO.read(file);
 	}
 	
 	public ImageIcon getImageIcon() {
