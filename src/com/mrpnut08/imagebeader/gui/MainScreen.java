@@ -1,5 +1,6 @@
 package com.mrpnut08.imagebeader.gui;
 
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,37 +13,46 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JSplitPane;
+import javax.swing.SwingConstants;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import com.mrpnut08.imagebeader.imaging.UnbeadedImage;
 
 public class MainScreen extends JFrame implements ActionListener{
-	
+
 	private JLabel unbeadedimg_holder;
 	private UnbeadedImage unbeadedimg;
-	
+
 	private JLabel source_imgpath;
 	
 	public MainScreen() {
 		super("Image Beader");
-		this.setSize(800, 600);
+		this.setSize(640, 480);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setLayout(new FlowLayout(FlowLayout.CENTER));
 		this.setResizable(true);
 		
-		this.generateOptionPanel();
-		this.generateUnbeadedPreviewPanel();
+		JSplitPane root_content_pane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
+													  this.generateOptionPanel(), 
+													  this.generateUnbeadedPreviewPanel());
+		this.add(root_content_pane);
 	}
 	
-	private void generateUnbeadedPreviewPanel() {
+	private JLabel generateUnbeadedPreviewPanel() {
+		
 		this.unbeadedimg = new UnbeadedImage();
 		this.unbeadedimg_holder = new JLabel();
-		this.add(this.unbeadedimg_holder);
+		this.unbeadedimg_holder.setMinimumSize(new Dimension(440, 480));
+		this.unbeadedimg_holder.setHorizontalAlignment(SwingConstants.CENTER);
+		this.unbeadedimg_holder.setVerticalAlignment(SwingConstants.CENTER);
+		return (this.unbeadedimg_holder);
+		
 		
 	}
 	
-	private void generateOptionPanel() {
+	private JPanel generateOptionPanel() {
 		JPanel panel = new JPanel(new FlowLayout());
+		panel.setMinimumSize(new Dimension(200, 480));
 		
 		JButton button = new JButton("Open File");
 		button.setActionCommand("FileOpen");
@@ -53,7 +63,7 @@ public class MainScreen extends JFrame implements ActionListener{
 		
 		panel.add(this.source_imgpath);
 		panel.add(button);
-		this.add(panel);
+		return(panel);
 	}
 
 	@Override
@@ -79,8 +89,6 @@ public class MainScreen extends JFrame implements ActionListener{
 					JOptionPane.showMessageDialog(this, io_error.getMessage());
 				} //try
 			break;
-			
 		} //switch(e.getActionCommand())
-		
 	}
 }
