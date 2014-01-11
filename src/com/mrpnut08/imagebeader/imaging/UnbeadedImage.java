@@ -1,5 +1,6 @@
 package com.mrpnut08.imagebeader.imaging;
 
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -25,6 +26,13 @@ public class UnbeadedImage {
 	
 	public ImageIcon getImageIcon() {
 		return (new ImageIcon(this.image));
+	}
+	
+	public ImageIcon getScaledImageIcon(float percent) {
+		int new_width = (int)Math.floor(this.image.getWidth() * percent / 100);
+		int	new_height = (int)Math.floor(this.image.getHeight() * percent / 100);
+		
+		return (new ImageIcon(this.image.getScaledInstance(new_width,new_height, Image.SCALE_DEFAULT)));
 	}
 	
 	public String getFilePath() {
