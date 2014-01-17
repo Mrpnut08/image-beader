@@ -14,6 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
+import javax.swing.JTabbedPane;
 import javax.swing.SwingConstants;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -21,8 +22,9 @@ import com.mrpnut08.imagebeader.imaging.UnbeadedImage;
 
 public class MainScreen extends JFrame implements ActionListener{
 
-	private JLabel unbeadedimg_holder;
-	private UnbeadedImage unbeadedimg;
+	private JTabbedPane image_tab_holder;
+	private JLabel unbeaded_image_holder;
+	private UnbeadedImage unbeaded_image;
 
 	private JLabel source_imgpath;
 	
@@ -34,18 +36,21 @@ public class MainScreen extends JFrame implements ActionListener{
 		
 		JSplitPane root_content_pane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
 													  this.generateOptionPanel(), 
-													  this.generateUnbeadedPreviewPanel());
+													  this.generatePreviewPanel());
 		this.add(root_content_pane);
 	}
 	
-	private JLabel generateUnbeadedPreviewPanel() {
+	private JTabbedPane generatePreviewPanel() {
+		this.image_tab_holder = new JTabbedPane(JTabbedPane.TOP);
 		
-		this.unbeadedimg = new UnbeadedImage();
-		this.unbeadedimg_holder = new JLabel();
-		this.unbeadedimg_holder.setMinimumSize(new Dimension(440, 480));
-		this.unbeadedimg_holder.setHorizontalAlignment(SwingConstants.CENTER);
-		this.unbeadedimg_holder.setVerticalAlignment(SwingConstants.CENTER);
-		return (this.unbeadedimg_holder);
+		this.unbeaded_image = new UnbeadedImage();
+		this.unbeaded_image_holder = new JLabel();
+		this.unbeaded_image_holder.setMinimumSize(new Dimension(440, 480));
+		this.unbeaded_image_holder.setHorizontalAlignment(SwingConstants.CENTER);
+		this.unbeaded_image_holder.setVerticalAlignment(SwingConstants.CENTER);
+		
+		this.image_tab_holder.addTab("Source Image", this.unbeaded_image_holder);
+		return (this.image_tab_holder);
 		
 		
 	}
@@ -80,9 +85,9 @@ public class MainScreen extends JFrame implements ActionListener{
 					int returnVal = filebrowser.showOpenDialog(this);
 					
 					if(returnVal == JFileChooser.APPROVE_OPTION) {
-						this.unbeadedimg.loadImage(filebrowser.getSelectedFile());
-						this.unbeadedimg_holder.setIcon(this.unbeadedimg.getImageIcon());
-						this.source_imgpath.setText(unbeadedimg.getFilePath());
+						this.unbeaded_image.loadImage(filebrowser.getSelectedFile());
+						this.unbeaded_image_holder.setIcon(this.unbeaded_image.getImageIcon());
+						this.source_imgpath.setText(unbeaded_image.getFilePath());
 					}// if(returnVal == JFileChooser.APPROVE_OPTION)
 					
 				} catch(IOException io_error){
