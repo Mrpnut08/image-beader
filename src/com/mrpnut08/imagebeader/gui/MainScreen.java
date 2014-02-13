@@ -19,6 +19,7 @@ import javax.swing.SwingConstants;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import com.mrpnut08.imagebeader.beads.BeadPallete;
+import com.mrpnut08.imagebeader.imaging.BeadedImage;
 import com.mrpnut08.imagebeader.imaging.UnbeadedImage;
 
 public class MainScreen extends JFrame implements ActionListener {
@@ -30,6 +31,9 @@ public class MainScreen extends JFrame implements ActionListener {
 	private UnbeadedImage unbeaded_image;
 	
 	private BeadPallete pallete;
+	
+	private JLabel beaded_image_holder;
+	private BeadedImage beaded_image;
 
 	private JLabel source_imgpath;
 
@@ -72,8 +76,18 @@ public class MainScreen extends JFrame implements ActionListener {
 
 			} catch (IOException io_error) {
 				JOptionPane.showMessageDialog(this, io_error.getMessage());
-			} // ~try
-			break;
+			} // ~catch (IOException io_error)
+		break; // ~case "FileOpen"
+		
+		case "BeadImage":
+			if (this.image_tab_holder.getTabCount() < 2) {
+				this.generateBeadedImageTab();
+			}
+			
+			this.beaded_image.generateBeadImage(this.unbeaded_image, this.pallete);
+			this.beaded_image_holder.setIcon(this.beaded_image.getImageIcon());
+		break; // ~case "BeadImage"
+		
 		} // ~switch(e.getActionCommand())
 	}
 
@@ -93,9 +107,14 @@ public class MainScreen extends JFrame implements ActionListener {
 		button.addActionListener(this);
 
 		this.source_imgpath = new JLabel("No file selected");
-
+		
+		JButton beadingbutton = new JButton("Generate Bead Pattern");
+		beadingbutton.setActionCommand("BeadImage");
+		beadingbutton.addActionListener(this);
+		
 		panel.add(this.source_imgpath);
 		panel.add(button);
+		panel.add(beadingbutton);
 		return (panel);
 	}
 
@@ -113,5 +132,15 @@ public class MainScreen extends JFrame implements ActionListener {
 				.addTab("Source Image", this.unbeaded_image_holder);
 		return (this.image_tab_holder);
 
+	}
+	
+	private void generateBeadedImageTab() {
+		this.beaded_image = new BeadedImage();
+		this.beaded_image_holder = new JLabel();
+		this.beaded_image_holder.setMinimumSize(new Dimension(440, 480));
+		this.beaded_image_holder
+				.setHorizontalAlignment(SwingConstants.CENTER);
+		this.beaded_image_holder.setVerticalAlignment(SwingConstants.CENTER);
+		this.image_tab_holder.addTab("Bead Pattern", this.beaded_image_holder);
 	}
 }
