@@ -49,6 +49,6 @@ public class UnbeadedImage {
 	}
 	
 	public Color getPixel(int x, int y) {
-		return new Color(this.image.getRGB(x, y));
+		return new Color(this.image.getRGB(x, y),true);
 	}
 }
