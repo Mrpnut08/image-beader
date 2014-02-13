@@ -13,6 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingConstants;
@@ -128,8 +129,10 @@ public class MainScreen extends JFrame implements ActionListener {
 				.setHorizontalAlignment(SwingConstants.CENTER);
 		this.unbeaded_image_holder.setVerticalAlignment(SwingConstants.CENTER);
 
+		JScrollPane scrollpane = new JScrollPane(this.unbeaded_image_holder);
+		
 		this.image_tab_holder
-				.addTab("Source Image", this.unbeaded_image_holder);
+				.addTab("Source Image", scrollpane);
 		return (this.image_tab_holder);
 
 	}
@@ -141,6 +144,9 @@ public class MainScreen extends JFrame implements ActionListener {
 		this.beaded_image_holder
 				.setHorizontalAlignment(SwingConstants.CENTER);
 		this.beaded_image_holder.setVerticalAlignment(SwingConstants.CENTER);
-		this.image_tab_holder.addTab("Bead Pattern", this.beaded_image_holder);
+		
+		JScrollPane scrollpane = new JScrollPane(this.beaded_image_holder);
+		
+		this.image_tab_holder.addTab("Bead Pattern", scrollpane);
 	}
 }
