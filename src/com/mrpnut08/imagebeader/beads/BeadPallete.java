@@ -10,8 +10,8 @@ public class BeadPallete {
 	private String name;
 	private HashSet<BeadColor> pallete_colors;
 	
-	public BeadPallete (String name) {
-		this.name = name;
+	public BeadPallete (String filename) throws Exception {
+		this(new File(filename));
 	}
 	
 	public BeadPallete (File file) throws Exception{
