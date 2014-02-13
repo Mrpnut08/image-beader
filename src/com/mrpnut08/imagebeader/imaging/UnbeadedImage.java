@@ -1,5 +1,6 @@
 package com.mrpnut08.imagebeader.imaging;
 
+import java.awt.Color;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -37,5 +38,17 @@ public class UnbeadedImage {
 	
 	public String getFilePath() {
 		return this.filepath;
+	}
+
+	public int getWidth() {
+		return this.image.getWidth();
+	}
+	
+	public int getHeight() {
+		return this.image.getHeight();
+	}
+	
+	public Color getPixel(int x, int y) {
+		return new Color(this.image.getRGB(x, y));
 	}
 }
