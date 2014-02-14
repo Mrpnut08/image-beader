@@ -32,7 +32,7 @@ public class BeadPallete {
 		BeadColor color, current;
 		Iterator<BeadColor> iterator = this.pallete_colors.iterator();
 		
-		color = BeadColor.CLEAR;
+		color = BeadColor.BLANK;
 		
 		if(sample.getAlpha() < 191) {
 			return color;
