@@ -3,6 +3,9 @@ package com.mrpnut08.imagebeader.beads;
 import java.awt.Color;
 
 public class BeadColor {
+	
+	public static final BeadColor CLEAR = new BeadColor("","Clear", 0, 0, 0, 0);
+	
 	private String name,
 				   id;
 	private Color color;
