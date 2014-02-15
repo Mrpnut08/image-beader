@@ -56,7 +56,6 @@ public class BeadPallete {
 		 		   + Math.pow(color1.getGreen() - color2.getGreen(), 2)
 		 		   + Math.pow(color1.getBlue() - color2.getBlue(), 2);
 		difference = Math.sqrt(difference);
-		difference = Math.floor(difference);
 		return difference;
 	}
 }
