@@ -43,8 +43,9 @@ public class BeadedImage {
 				bead_color = pallete.findColorEquivalent(source.getPixel(x, y));
 				canvas.setColor(bead_color.getColor());
 				canvas.fillRect(tx, ty, this.SQUARE_SIZE, this.SQUARE_SIZE);
-				canvas.setColor(Color.WHITE);
+				canvas.setColor(Color.LIGHT_GRAY);
 				canvas.drawRect(tx, ty, this.SQUARE_SIZE, this.SQUARE_SIZE);
+				canvas.setColor(bead_color.getContrastingColor());
 				canvas.drawString(bead_color.getId(), tx, (y+1)*this.SQUARE_SIZE);
 				
 				if (!bead_color.getId().isEmpty()) {
