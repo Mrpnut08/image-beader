@@ -33,6 +33,6 @@ public class BeadColor {
 			float average = this.color.getRed() + this.getColor().getGreen()
 					+ this.color.getBlue();
 			average /= 3;
-			return (average < 128) ? Color.WHITE : Color.BLACK;
+			return (average < 192) ? Color.WHITE : Color.BLACK;
 	}
 }
