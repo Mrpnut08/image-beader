@@ -24,8 +24,10 @@ import javax.swing.plaf.PanelUI;
 import com.mrpnut08.imagebeader.beads.BeadPallete;
 import com.mrpnut08.imagebeader.imaging.BeadedImage;
 import com.mrpnut08.imagebeader.imaging.UnbeadedImage;
+import com.mrpnut08.imagebeader.listener.OnImageLoadListener;
 
-public class MainScreen extends JFrame implements ActionListener {
+public class MainScreen extends JFrame implements ActionListener,
+		OnImageLoadListener {
 
 	private static final long serialVersionUID = 1L;
 
@@ -37,8 +39,8 @@ public class MainScreen extends JFrame implements ActionListener {
 
 	private JLabel beaded_image_holder;
 	private BeadedImage beaded_image;
-
-	private JLabel source_imgpath;
+	
+	private JButton beading_button;
 
 	private ImageLoadingPanel image_loader;
 	private BeadingResultPane beadingresult;
@@ -62,11 +64,12 @@ public class MainScreen extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if( this.unbeaded_image.getFilePath().isEmpty()) {
-			JOptionPane.showMessageDialog(this, "No Image has been loaded","Error", JOptionPane.ERROR_MESSAGE);
+		if (this.unbeaded_image.getFilePath().isEmpty()) {
+			JOptionPane.showMessageDialog(this, "No Image has been loaded",
+					"Error", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
-		
+
 		if (this.image_tab_holder.getTabCount() < 2) {
 			this.generateBeadedImageTab();
 		}
@@ -89,15 +92,16 @@ public class MainScreen extends JFrame implements ActionListener {
 		panel.setMinimumSize(new Dimension(200, 480));
 
 		// Create ImageLoadingPanel.
-		this.image_loader = new ImageLoadingPanel();
+		this.image_loader = new ImageLoadingPanel(this);
 		panel.add(this.image_loader);
 
-		JButton beadingbutton = new JButton("Generate Bead Pattern");
-		beadingbutton.setAlignmentX(CENTER_ALIGNMENT);
-		beadingbutton.setActionCommand("BeadImage");
-		beadingbutton.addActionListener(this);
+		this.beading_button = new JButton("Generate Bead Pattern");
+		this.beading_button.setAlignmentX(CENTER_ALIGNMENT);
+		this.beading_button.setActionCommand("BeadImage");
+		this.beading_button.addActionListener(this);
+		this.beading_button.setEnabled(false);
 
-		panel.add(beadingbutton);
+		panel.add(this.beading_button);
 		return (panel);
 	}
 
@@ -112,7 +116,7 @@ public class MainScreen extends JFrame implements ActionListener {
 		this.unbeaded_image_holder.setVerticalAlignment(SwingConstants.CENTER);
 
 		JScrollPane scrollpane = new JScrollPane(this.unbeaded_image_holder);
-
+		
 		this.image_tab_holder.addTab("Source Image", scrollpane);
 		return (this.image_tab_holder);
 
@@ -128,5 +132,17 @@ public class MainScreen extends JFrame implements ActionListener {
 		JScrollPane scrollpane = new JScrollPane(this.beaded_image_holder);
 
 		this.image_tab_holder.addTab("Bead Pattern", scrollpane);
+	}
+
+	@Override
+	public void onImageLoad(String filepath) {
+		try {
+			this.unbeaded_image.loadImage(filepath);
+			this.unbeaded_image_holder.setIcon(this.unbeaded_image
+					.getImageIcon());
+			this.beading_button.setEnabled(true);
+		} catch (Exception io_error) {
+			JOptionPane.showMessageDialog(this, io_error.getMessage());
+		} // ~try
 	}
 }
