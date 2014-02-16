@@ -15,6 +15,11 @@ public class UnbeadedImage {
 	private String filepath;
 	
 	
+	public UnbeadedImage () {
+		this.image = null;
+		this.filepath = "";
+	}
+	
 	public void loadImage(String filepath) throws IOException {
 		this.filepath = filepath;
 		this.image = ImageIO.read(new File(filepath));
