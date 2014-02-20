@@ -14,7 +14,9 @@ import com.mrpnut08.imagebeader.beads.BeadPallete;
 
 public class BeadedImage {
 	
-	private final int SQUARE_SIZE = 24;
+	private final int SQUARE_SIZE = 36;
+	private final int TEXT_SMALL = 3;
+	private final int TEXT_LARGE = 2;
 	
 	private BufferedImage image;
 	private HashSet<String> colors_used;
@@ -23,15 +25,24 @@ public class BeadedImage {
 		this.colors_used = new HashSet<String>();
 	}
 	
-	public void generateBeadImage (UnbeadedImage source, BeadPallete pallete) {
+	public void generateBeadSet(UnbeadedImage source, BeadPallete pallete, Boolean text_small) {
+		
+		this.generateFullImage(source, pallete, text_small);
+	}
+	
+	public void generateFullImage (UnbeadedImage source, BeadPallete pallete, Boolean text_small) {
 		Graphics2D canvas;
 		BeadColor bead_color;
-		Font font = new Font(Font.MONOSPACED,Font.PLAIN,this.SQUARE_SIZE/2);
+		
+		Font font = new Font(Font.MONOSPACED,
+							 Font.PLAIN,
+							 this.SQUARE_SIZE/ ((text_small)? TEXT_SMALL : TEXT_LARGE));
 		
 		int tx, ty;
 		this.image = new BufferedImage( source.getWidth()*this.SQUARE_SIZE,
 										source.getHeight()*this.SQUARE_SIZE,
 										BufferedImage.TYPE_INT_ARGB);
+		
 		canvas = this.image.createGraphics();
 		canvas.setFont(font);
 		
@@ -47,13 +58,12 @@ public class BeadedImage {
 				canvas.drawRect(tx, ty, this.SQUARE_SIZE, this.SQUARE_SIZE);
 				canvas.setColor(bead_color.getContrastingColor());
 				canvas.drawString(bead_color.getId(), tx, (y+1)*this.SQUARE_SIZE);
-				
+				this.image.flush();
 				if (!bead_color.getId().isEmpty()) {
 				this.colors_used.add(bead_color.getId() +" - "+ bead_color.getName());
 				}
 			}
 		}
-		this.image.flush();
 	}
 	
 	public ImageIcon getImageIcon() {
