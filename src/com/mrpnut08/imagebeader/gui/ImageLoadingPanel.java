@@ -3,13 +3,12 @@ package com.mrpnut08.imagebeader.gui;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -35,6 +34,9 @@ public class ImageLoadingPanel extends JPanel implements ActionListener {
 		//Instantiate the JPanel super-class.
 		super();
 		
+		BoxLayout boxlayout = new BoxLayout(this,BoxLayout.X_AXIS);
+		this.setLayout(boxlayout);
+		
 		//Set OnImageLoadListener
 		this.listener = listener;
 		
@@ -53,7 +55,7 @@ public class ImageLoadingPanel extends JPanel implements ActionListener {
 	 * Action for open_file_button. Displays the file chooser for the user to
 	 * select a file and notifies that a new image has been loaded.
 	 * 
-	 * @param action action when multiple object use the listener (not used)
+	 * @param action not used.
 	 */
 	@Override
 	public void actionPerformed(ActionEvent action) {
@@ -69,7 +71,7 @@ public class ImageLoadingPanel extends JPanel implements ActionListener {
 
 		//If the user chose a file. Display the file path and call the listener.
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
-			this.image_path.setText(filebrowser.getSelectedFile().getPath());
+			this.image_path.setText(filebrowser.getSelectedFile().getName());
 			this.listener.onImageLoad(filebrowser.getSelectedFile().getPath());
 		}
 	}
