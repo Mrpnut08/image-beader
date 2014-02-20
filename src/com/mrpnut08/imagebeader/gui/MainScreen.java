@@ -1,15 +1,11 @@
 package com.mrpnut08.imagebeader.gui;
 
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 
-import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -18,8 +14,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingConstants;
-import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.plaf.PanelUI;
 
 import com.mrpnut08.imagebeader.beads.BeadPallete;
 import com.mrpnut08.imagebeader.imaging.BeadedImage;
@@ -43,7 +37,6 @@ public class MainScreen extends JFrame implements ActionListener,
 	private JButton beading_button;
 
 	private ImageLoadingPanel image_loader;
-	private BeadingResultPane beadingresult;
 
 	public MainScreen() {
 		super("Image Beader");
@@ -74,7 +67,7 @@ public class MainScreen extends JFrame implements ActionListener,
 			this.generateBeadedImageTab();
 		}
 
-		this.beaded_image.generateBeadImage(this.unbeaded_image, this.pallete);
+		this.beaded_image.generateBeadSet(this.unbeaded_image, this.pallete, true);
 		this.beaded_image_holder.setIcon(this.beaded_image.getImageIcon());
 	}
 
@@ -107,7 +100,7 @@ public class MainScreen extends JFrame implements ActionListener,
 
 	private JTabbedPane generatePreviewPanel() {
 		this.image_tab_holder = new JTabbedPane(JTabbedPane.TOP);
-
+		
 		this.unbeaded_image = new UnbeadedImage();
 		this.unbeaded_image_holder = new JLabel();
 		this.unbeaded_image_holder.setMinimumSize(new Dimension(440, 480));
