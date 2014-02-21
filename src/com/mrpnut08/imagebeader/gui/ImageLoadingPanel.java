@@ -1,12 +1,9 @@
 package com.mrpnut08.imagebeader.gui;
 
-import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
@@ -30,6 +27,7 @@ public class ImageLoadingPanel extends JPanel implements ActionListener {
 	private static final long serialVersionUID = 1L;
 
 	private JLabel image;
+	private String filepath;
 	private OnImageLoadListener listener;
 
 	/**
@@ -45,16 +43,20 @@ public class ImageLoadingPanel extends JPanel implements ActionListener {
 
 		// Create the file path label
 		this.image = new JLabel("No File Selected");
-		this.setAlignmentX(CENTER_ALIGNMENT);
+		this.image.setAlignmentX(CENTER_ALIGNMENT);
 		this.image.setVerticalTextPosition(JLabel.BOTTOM);
 		this.image.setHorizontalTextPosition(JLabel.CENTER);
 		this.add(this.image);
 
 		// Create the open file button.
 		JButton open_file_button = new JButton("Open File");
+		open_file_button.setAlignmentX(CENTER_ALIGNMENT);
 		open_file_button.setActionCommand("FileOpen");
 		open_file_button.addActionListener(this);
 		this.add(open_file_button);
+		
+		//Instantiate filepath to empty.
+		this.filepath = "";
 	}
 
 	/**
@@ -81,8 +83,13 @@ public class ImageLoadingPanel extends JPanel implements ActionListener {
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			this.loadPreviewImage(filebrowser.getSelectedFile());
 			this.image.setText(filebrowser.getSelectedFile().getName());
-			this.listener.onImageLoad(filebrowser.getSelectedFile().getPath());
+			this.filepath = filebrowser.getSelectedFile().getPath();
+			this.listener.onImageLoad(this.filepath);
 		}
+	}
+	
+	public String getFilePath() {
+		return this.filepath;
 	}
 
 	private void loadPreviewImage(File file) {
