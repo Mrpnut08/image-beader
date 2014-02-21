@@ -3,6 +3,7 @@ package com.mrpnut08.imagebeader.gui;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -57,18 +58,22 @@ public class MainScreen extends JFrame implements ActionListener,
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (this.unbeaded_image.getFilePath().isEmpty()) {
+		if (this.image_loader.getFilePath().isEmpty()) {
 			JOptionPane.showMessageDialog(this, "No Image has been loaded",
 					"Error", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
-
+		
+		try {
 		if (this.image_tab_holder.getTabCount() < 2) {
 			this.generateBeadedImageTab();
 		}
 
-		this.beaded_image.generateBeadSet(this.unbeaded_image, this.pallete, true);
+		this.beaded_image.generateBeadSet(this.image_loader.getFilePath(), this.pallete, BeadedImage.TEXT_SMALL);
 		this.beaded_image_holder.setIcon(this.beaded_image.getImageIcon());
+		} catch (IOException io_error) {
+			JOptionPane.showMessageDialog(this, io_error.getMessage());
+		}
 	}
 
 	private void generateGUIContent() {
@@ -115,7 +120,7 @@ public class MainScreen extends JFrame implements ActionListener,
 
 	}
 
-	private void generateBeadedImageTab() {
+	private void generateBeadedImageTab() throws IOException {
 		this.beaded_image = new BeadedImage();
 		this.beaded_image_holder = new JLabel();
 		this.beaded_image_holder.setMinimumSize(new Dimension(440, 480));
