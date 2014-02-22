@@ -69,8 +69,8 @@ public class MainScreen extends JFrame implements ActionListener,
 			this.generateBeadedImageTab();
 		}
 
-		this.beaded_image.generateBeadSet(this.image_loader.getFilePath(), this.pallete, BeadedImage.TEXT_SMALL);
-		this.beaded_image_holder.setIcon(this.beaded_image.getImageIcon());
+		this.beaded_image.generateBeadSet(this.image_loader.getFilePath(), this.pallete, BeadedImage.TEXT_LARGE);
+		this.beaded_image_holder.setIcon(this.beaded_image.getFullPattern());
 		} catch (IOException io_error) {
 			JOptionPane.showMessageDialog(this, io_error.getMessage());
 		}
