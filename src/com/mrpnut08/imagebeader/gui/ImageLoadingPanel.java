@@ -1,16 +1,16 @@
 package com.mrpnut08.imagebeader.gui;
 
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -80,11 +80,15 @@ public class ImageLoadingPanel extends JPanel implements ActionListener {
 
 		// If the user chose a file. Display the file path and call the
 		// listener.
+		try {
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			this.loadPreviewImage(filebrowser.getSelectedFile());
 			this.image.setText(filebrowser.getSelectedFile().getName());
 			this.filepath = filebrowser.getSelectedFile().getPath();
 			this.listener.onImageLoad(this.filepath);
+		}
+		} catch (IOException io_error) {
+			JOptionPane.showMessageDialog(this, io_error.getMessage());
 		}
 	}
 	
@@ -92,16 +96,9 @@ public class ImageLoadingPanel extends JPanel implements ActionListener {
 		return this.filepath;
 	}
 
-	private void loadPreviewImage(File file) {
-		ImageIcon image = new ImageIcon(file.getPath());
-		
-		double scale = 200 / (double) Math.max(image.getIconHeight(), image.getIconWidth());
-		
-		image.setImage(image.getImage().getScaledInstance(
-				(int)Math.round(image.getIconWidth() * scale), 
-				(int)Math.round(image.getIconHeight() * scale),
-				Image.SCALE_FAST));
+	private void loadPreviewImage(File file) throws IOException {
+		PreviewImageIcon image = new PreviewImageIcon();
+		image.setImage(ImageIO.read(file));
 		this.image.setIcon(image);
-
 	}
 }
