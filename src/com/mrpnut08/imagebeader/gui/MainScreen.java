@@ -38,10 +38,11 @@ public class MainScreen extends JFrame implements ActionListener,
 	private JButton beading_button;
 
 	private ImageLoadingPanel image_loader;
+	private BeadPatternPanel result_panel;
 
 	public MainScreen() {
 		super("Image Beader");
-		this.setSize(640, 480);
+		this.setMinimumSize(new Dimension(640, 480));
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setResizable(true);
 
@@ -64,22 +65,15 @@ public class MainScreen extends JFrame implements ActionListener,
 			return;
 		}
 		
-		try {
-		if (this.image_tab_holder.getTabCount() < 2) {
-			this.generateBeadedImageTab();
-		}
-
-		this.beaded_image.generateBeadSet(this.image_loader.getFilePath(), this.pallete, BeadedImage.TEXT_LARGE);
-		this.beaded_image_holder.setIcon(this.beaded_image.getFullPattern());
-		} catch (IOException io_error) {
-			JOptionPane.showMessageDialog(this, io_error.getMessage());
-		}
+		this.result_panel.generatePattern(this.image_loader.getFilePath(), this.pallete, BeadedImage.TEXT_LARGE);		
 	}
 
 	private void generateGUIContent() {
+		this.result_panel = new BeadPatternPanel();
+		
 		JSplitPane root_content_pane = new JSplitPane(
 				JSplitPane.HORIZONTAL_SPLIT, this.generateOptionPanel(),
-				this.generatePreviewPanel());
+				this.result_panel);
 		this.add(root_content_pane);
 	}
 
@@ -134,13 +128,6 @@ public class MainScreen extends JFrame implements ActionListener,
 
 	@Override
 	public void onImageLoad(String filepath) {
-		try {
-			this.unbeaded_image.loadImage(filepath);
-			this.unbeaded_image_holder.setIcon(this.unbeaded_image
-					.getImageIcon());
 			this.beading_button.setEnabled(true);
-		} catch (Exception io_error) {
-			JOptionPane.showMessageDialog(this, io_error.getMessage());
-		} // ~try
 	}
 }
