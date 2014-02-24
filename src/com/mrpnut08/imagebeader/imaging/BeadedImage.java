@@ -16,6 +16,7 @@ import javax.swing.ImageIcon;
 
 import com.mrpnut08.imagebeader.beads.BeadColor;
 import com.mrpnut08.imagebeader.beads.BeadPallete;
+import com.mrpnut08.imagebeader.gui.PreviewImageIcon;
 
 /**
  * Creates and handles the files and parts of the image
@@ -74,6 +75,10 @@ public class BeadedImage {
 	 */
 	public ImageIcon getFullPattern() {
 		return (new ImageIcon(this.fullpattern.getPath()));
+	}
+	
+	public PreviewImageIcon getThumbnail() {
+		return (new PreviewImageIcon(this.thumbnail.getPath()));
 	}
 	
 	/** (Getter)

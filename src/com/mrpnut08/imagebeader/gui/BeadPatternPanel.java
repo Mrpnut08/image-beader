@@ -3,6 +3,7 @@ package com.mrpnut08.imagebeader.gui;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -27,14 +28,19 @@ public class BeadPatternPanel extends JPanel implements ActionListener{
 	
 	private BeadedImage pattern;
 	
-	public BeadPatternPanel (){
+	private Frame parent;
+	
+	public BeadPatternPanel (Frame parent){
 		
 		// Call super class constructor to initialize JPanel.
 		super();
 		this.setMinimumSize(new Dimension(440,480));
 		this.setLayout(new BorderLayout());
+
+		// Store parent Frame used for calling the dialogs.
+		this.parent = parent;
 		
-		 // Getting ready the BeadedImage class.
+		// Getting ready the BeadedImage class.
 		this.pattern = new BeadedImage();
 		
 		// Create the image view JLabel used to display the images.
@@ -54,12 +60,14 @@ public class BeadPatternPanel extends JPanel implements ActionListener{
 		//Create the Pattern Details Button.
 		this.pattern_details = new JButton("Pattern Details");
 		this.pattern_details.setActionCommand("PatternDetails");
+		this.pattern_details.addActionListener(this);
 		this.pattern_details.setEnabled(false);
 		button_panel.add(pattern_details);
 		
 		//Create the pegboard switcher button.
 		this.pegboard_switcher = new JButton("Switch Pegboard");
 		this.pegboard_switcher.setActionCommand("SwitchPegboard");
+		this.pegboard_switcher.addActionListener(this);
 		this.pegboard_switcher.setEnabled(false);
 		button_panel.add(pegboard_switcher);
 	}
@@ -92,6 +100,7 @@ public class BeadPatternPanel extends JPanel implements ActionListener{
 		
 		// Open pattern details window if the pattern datails button was pressed.
 		case "PatternDetails":
+			new PatternDetailsWindow(this.parent, this.pattern.getThumbnail(), this.pattern.getUsedColorList()).setVisible(true);
 		break;
 		
 		// if the pegboard switcher button was pressed.
