@@ -56,7 +56,7 @@ public class MainScreen extends JFrame implements ActionListener,
 	}
 
 	private void generateGUIContent() {
-		this.result_panel = new BeadPatternPanel();
+		this.result_panel = new BeadPatternPanel(this);
 		
 		JSplitPane root_content_pane = new JSplitPane(
 				JSplitPane.HORIZONTAL_SPLIT, this.generateOptionPanel(),

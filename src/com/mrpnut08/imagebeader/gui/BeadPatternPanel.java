@@ -100,7 +100,7 @@ public class BeadPatternPanel extends JPanel implements ActionListener{
 		
 		// Open pattern details window if the pattern datails button was pressed.
 		case "PatternDetails":
-			new PatternDetailsWindow(this.parent, this.pattern.getThumbnail(), this.pattern.getUsedColorList()).setVisible(true);
+			new PatternDetailsDialog(this.parent, this.pattern.getThumbnail(), this.pattern.getUsedColorList()).setVisible(true);
 		break;
 		
 		// if the pegboard switcher button was pressed.
