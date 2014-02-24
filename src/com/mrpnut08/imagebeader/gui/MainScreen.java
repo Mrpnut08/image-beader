@@ -3,22 +3,16 @@ package com.mrpnut08.imagebeader.gui;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
-import javax.swing.JTabbedPane;
-import javax.swing.SwingConstants;
 
 import com.mrpnut08.imagebeader.beads.BeadPallete;
 import com.mrpnut08.imagebeader.imaging.BeadedImage;
-import com.mrpnut08.imagebeader.imaging.UnbeadedImage;
 import com.mrpnut08.imagebeader.listener.OnImageLoadListener;
 
 public class MainScreen extends JFrame implements ActionListener,
@@ -26,14 +20,7 @@ public class MainScreen extends JFrame implements ActionListener,
 
 	private static final long serialVersionUID = 1L;
 
-	private JTabbedPane image_tab_holder;
-	private JLabel unbeaded_image_holder;
-	private UnbeadedImage unbeaded_image;
-
 	private BeadPallete pallete;
-
-	private JLabel beaded_image_holder;
-	private BeadedImage beaded_image;
 	
 	private JButton beading_button;
 
@@ -95,35 +82,6 @@ public class MainScreen extends JFrame implements ActionListener,
 
 		panel.add(this.beading_button);
 		return (panel);
-	}
-
-	private JTabbedPane generatePreviewPanel() {
-		this.image_tab_holder = new JTabbedPane(JTabbedPane.TOP);
-		
-		this.unbeaded_image = new UnbeadedImage();
-		this.unbeaded_image_holder = new JLabel();
-		this.unbeaded_image_holder.setMinimumSize(new Dimension(440, 480));
-		this.unbeaded_image_holder
-				.setHorizontalAlignment(SwingConstants.CENTER);
-		this.unbeaded_image_holder.setVerticalAlignment(SwingConstants.CENTER);
-
-		JScrollPane scrollpane = new JScrollPane(this.unbeaded_image_holder);
-		
-		this.image_tab_holder.addTab("Source Image", scrollpane);
-		return (this.image_tab_holder);
-
-	}
-
-	private void generateBeadedImageTab() throws IOException {
-		this.beaded_image = new BeadedImage();
-		this.beaded_image_holder = new JLabel();
-		this.beaded_image_holder.setMinimumSize(new Dimension(440, 480));
-		this.beaded_image_holder.setHorizontalAlignment(SwingConstants.CENTER);
-		this.beaded_image_holder.setVerticalAlignment(SwingConstants.CENTER);
-
-		JScrollPane scrollpane = new JScrollPane(this.beaded_image_holder);
-
-		this.image_tab_holder.addTab("Bead Pattern", scrollpane);
 	}
 
 	@Override
