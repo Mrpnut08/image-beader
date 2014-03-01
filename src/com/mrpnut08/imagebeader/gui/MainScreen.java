@@ -3,6 +3,7 @@ package com.mrpnut08.imagebeader.gui;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -35,7 +36,7 @@ public class MainScreen extends JFrame implements ActionListener,
 
 		try {
 			this.pallete = new BeadPallete(
-					"/home/algis-kun/code/perlercolorsorter/perler_pallete.xml");
+					new File(this.getClass().getClassLoader().getResource("perler_pallete.xml").toURI()));
 		} catch (Exception io_error) {
 			JOptionPane.showMessageDialog(this, io_error.getMessage());
 		} // ~try
