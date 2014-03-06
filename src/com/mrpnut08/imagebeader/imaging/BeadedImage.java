@@ -97,6 +97,10 @@ public class BeadedImage {
 		return list.split("\n");
 	}
 	
+	public ImageIcon getPegboard (int x, int y) {
+		return new ImageIcon(this.board_pattern.get(this.getCoordinate(x, y)).getPath());
+	}
+	
 	private BufferedImage generateImage (BufferedImage source, BeadPallete pallete, Rectangle dimensions, boolean thumbnail, int text_size) {
 		Graphics2D canvas;
 		BeadColor bead_color;
@@ -211,8 +215,8 @@ public class BeadedImage {
 				this.board_pattern.get(this.getCoordinate(x, y)).deleteOnExit();
 
 				rectangle = new Rectangle(x*29,y*29,
-										 (x*29 +28> source.getWidth())? source.getWidth()-x*29 : 29,
-										 (y*29 +28> source.getHeight())? source.getHeight()-y*29 : 29);
+										 (x*29 +28>= source.getWidth())? source.getWidth()-x*29 : 29,
+										 (y*29 +28>= source.getHeight())? source.getHeight()-y*29 : 29);
 				
 				ImageIO.write(this.generateImage(source, pallete, rectangle, false, text_size),
 						      this.TEMP_SUFFIX, 

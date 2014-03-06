@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Frame;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -29,6 +30,8 @@ public class BeadPatternPanel extends JPanel implements ActionListener{
 	private BeadedImage pattern;
 	
 	private Frame parent;
+	
+	private Point pegboard_index;
 	
 	public BeadPatternPanel (Frame parent){
 		
@@ -83,8 +86,11 @@ public class BeadPatternPanel extends JPanel implements ActionListener{
 			this.pattern_details.setEnabled(true);
 			this.pegboard_switcher.setEnabled(true);
 			
-			//load pattern.
-			//this.image_view.setIcon(this.pattern.getFullPattern());
+			//load upper-left pegboard (0,0).
+			this.image_view.setIcon(this.pattern.getPegboard(0, 0));
+			
+			//save pegboard index.
+			this.pegboard_index = new Point(0,0);
 			
 		} catch (IOException io_err) {
 			JOptionPane.showMessageDialog(this, io_err.getMessage());
