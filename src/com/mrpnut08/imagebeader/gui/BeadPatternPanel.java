@@ -84,7 +84,7 @@ public class BeadPatternPanel extends JPanel implements ActionListener{
 			this.pegboard_switcher.setEnabled(true);
 			
 			//load pattern.
-			this.image_view.setIcon(this.pattern.getFullPattern());
+			//this.image_view.setIcon(this.pattern.getFullPattern());
 			
 		} catch (IOException io_err) {
 			JOptionPane.showMessageDialog(this, io_err.getMessage());

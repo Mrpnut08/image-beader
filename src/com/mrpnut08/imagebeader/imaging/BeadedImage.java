@@ -1,6 +1,7 @@
 package com.mrpnut08.imagebeader.imaging;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
@@ -40,6 +41,7 @@ public class BeadedImage {
 	
 	private ArrayList<File> board_pattern;
 	
+	private Dimension pattern_size;
 	private HashSet<String> colors_used;
 	
 	
@@ -64,7 +66,7 @@ public class BeadedImage {
 		BufferedImage source = ImageIO.read(new File(filepath));
 		
 		this.createThumbnail(source, pallete);
-		this.createFullPattern(source, pallete, text_size);
+		//this.createFullPattern(source, pallete, text_size);
 		this.createPegboards(source, pallete, text_size);
 	}
 	
@@ -116,12 +118,12 @@ public class BeadedImage {
 		}
 		
 		
-		for (int y = dimensions.y; y < dimensions.getHeight(); y++) {
-			for(int x = dimensions.x; x < dimensions.getWidth(); x++) {
+		for (int y = 0; y < dimensions.getHeight(); y++) {
+			for(int x = 0; x < dimensions.getWidth(); x++) {
 				tx = x * square_size;
 				ty = y * square_size;
 				
-				bead_color = pallete.findColorEquivalent(new Color(source.getRGB(x, y),true));
+				bead_color = pallete.findColorEquivalent(new Color(source.getRGB(dimensions.x + x,dimensions.y + y),true));
 				canvas.setColor(bead_color.getColor());
 				canvas.fillRect(tx, ty, square_size, square_size);
 				if (!thumbnail) {
@@ -183,7 +185,7 @@ public class BeadedImage {
 	
 	private void createPegboards(BufferedImage source, BeadPallete pallete, int text_size) throws IOException {
 		
-		// Delete already existing temp from the pegcoards ArrayList.
+		// Delete already existing temp from the pegboards ArrayList.
 		for(File board: this.board_pattern){
 			board.delete();
 		}
@@ -191,7 +193,32 @@ public class BeadedImage {
 		// Clear the ArrayList. 
 		this.board_pattern.clear();
 		
+		// Calculate the Dimensions of the pattern in pegboards.
+		this.pattern_size = new Dimension((int)Math.ceil(source.getWidth()/29f),
+										  (int)Math.ceil(source.getHeight()/29f));
 		
+		
+		// Declare Rectangle used for beading.
+		Rectangle rectangle;
+		
+		for(int y = 0; y < this.pattern_size.getHeight(); y ++) {
+			for(int x = 0; x < this.pattern_size.getWidth(); x ++) {
+				
+				// Create temporal file to store the pattern
+				this.board_pattern.add(File.createTempFile(this.TEMP_PREFFIX+"pegboard-"+this.getCoordinate(x, y)+"-",
+														   this.TEMP_SUFFIX));
+				
+				this.board_pattern.get(this.getCoordinate(x, y)).deleteOnExit();
+
+				rectangle = new Rectangle(x*29,y*29,
+										 (x*29 +28> source.getWidth())? source.getWidth()-x*29 : 29,
+										 (y*29 +28> source.getHeight())? source.getHeight()-y*29 : 29);
+				
+				ImageIO.write(this.generateImage(source, pallete, rectangle, false, text_size),
+						      this.TEMP_SUFFIX, 
+						      this.board_pattern.get(this.getCoordinate(x, y)));
+			}
+		}
 	}
 	
 	private void createFullPattern(BufferedImage source, BeadPallete pallete, int text_size) throws IOException {
@@ -206,5 +233,9 @@ public class BeadedImage {
 								   text_size),
 				this.TEMP_SUFFIX,
 				this.fullpattern);
+	}
+	
+	private int getCoordinate(int x, int y) {
+		return (y*this.pattern_size.width + x);
 	}
 }
