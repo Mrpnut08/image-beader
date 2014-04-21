@@ -92,13 +92,13 @@ public class BeadPatternPanel extends JPanel implements ActionListener{
 			//save pegboard index.
 			this.pegboard_index = new Point(0,0);
 			
+		// Show error dialog if anything happens
 		} catch (IOException io_err) {
 			JOptionPane.showMessageDialog(this, io_err.getMessage());
 		}
 		
 	}
 	
-	@Override
 	public void actionPerformed(ActionEvent e) {
 		
 		// Check which button was pressed
