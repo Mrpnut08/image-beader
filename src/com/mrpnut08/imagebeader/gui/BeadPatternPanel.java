@@ -111,6 +111,7 @@ public class BeadPatternPanel extends JPanel implements ActionListener{
 		
 		// if the pegboard switcher button was pressed.
 		case "SwitchPegboard":
+			new SwitchPegoardDialog(this.parent,this.pattern.getSize(),this.pegboard_index).setVisible(true);
 		break;
 		}
 	}

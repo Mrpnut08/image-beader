@@ -22,8 +22,7 @@ public class PatternDetailsDialog extends JDialog implements ActionListener{
 	public PatternDetailsDialog(Frame parent, PreviewImageIcon thumbnail_image, String[] colors) {
 		super(parent, "Pattern Details");
 		this.setResizable(true);
-		this.setMinimumSize(new Dimension(400, 280));
-		this.setMaximumSize(new Dimension(450,480));
+		this.setMinimumSize(new Dimension(400, 480));
 		this.setLayout(new BorderLayout());
 
 		// Create content Panel.

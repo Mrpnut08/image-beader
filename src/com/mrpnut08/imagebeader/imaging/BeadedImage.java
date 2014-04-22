@@ -65,6 +65,10 @@ public class BeadedImage {
 	public void generateBeadSet(String filepath, BeadPallete pallete, int text_size) throws IOException {
 		BufferedImage source = ImageIO.read(new File(filepath));
 		
+		this.pattern_size = new Dimension();
+		this.pattern_size.setSize(Math.ceil(source.getWidth()/29d),
+								  Math.ceil(source.getHeight()/29d));
+		
 		this.createThumbnail(source, pallete);
 		//this.createFullPattern(source, pallete, text_size);
 		this.createPegboards(source, pallete, text_size);
@@ -99,6 +103,10 @@ public class BeadedImage {
 	
 	public ImageIcon getPegboard (int x, int y) {
 		return new ImageIcon(this.board_pattern.get(this.getCoordinate(x, y)).getPath());
+	}
+	
+	public Dimension getSize() {
+		return this.pattern_size;
 	}
 	
 	private BufferedImage generateImage (BufferedImage source, BeadPallete pallete, Rectangle dimensions, boolean thumbnail, int text_size) {
