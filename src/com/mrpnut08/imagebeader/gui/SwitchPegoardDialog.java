@@ -14,11 +14,14 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 
+import com.mrpnut08.imagebeader.actions.PegboardSwitchAction;
+import com.mrpnut08.imagebeader.listener.OnPegboardSwitchListener;
+
 public class SwitchPegoardDialog extends JDialog implements ActionListener{
 
 	private static final long serialVersionUID = 1L;
 
-	public SwitchPegoardDialog(Frame parent, Dimension size, Point index) {
+	public SwitchPegoardDialog(OnPegboardSwitchListener listener, Frame parent, Dimension size, Point index) {
 		super(parent, "Pattern Details");
 		this.setResizable(true);
 		this.setMinimumSize(new Dimension(400, 280));
@@ -29,9 +32,11 @@ public class SwitchPegoardDialog extends JDialog implements ActionListener{
 		
 		ButtonGroup group = new ButtonGroup();
 		
-		for (int x = 0; x < size.width; x++) {
-			for (int y = 0; y < size.height; y++) {
-				JToggleButton button = new JToggleButton(y +", "+ x, (x == index.x && y == index.y));
+		for (int y = 0; y < size.width; y++) {
+			for (int x = 0; x < size.height; x++) {
+				JToggleButton button = new JToggleButton();
+				button.setSelected((x == index.x && y == index.y));
+				button.setAction(new PegboardSwitchAction(listener, x, y));
 				group.add(button);
 				panel.add(button);
 			}
@@ -50,4 +55,5 @@ public class SwitchPegoardDialog extends JDialog implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		this.dispose();	
 	}
+	
 }

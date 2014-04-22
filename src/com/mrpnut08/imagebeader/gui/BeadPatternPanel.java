@@ -17,8 +17,9 @@ import javax.swing.JScrollPane;
 
 import com.mrpnut08.imagebeader.beads.BeadPallete;
 import com.mrpnut08.imagebeader.imaging.BeadedImage;
+import com.mrpnut08.imagebeader.listener.OnPegboardSwitchListener;
 
-public class BeadPatternPanel extends JPanel implements ActionListener{
+public class BeadPatternPanel extends JPanel implements ActionListener, OnPegboardSwitchListener{
 
 	private static final long serialVersionUID = 1L;
 	
@@ -86,11 +87,8 @@ public class BeadPatternPanel extends JPanel implements ActionListener{
 			this.pattern_details.setEnabled(true);
 			this.pegboard_switcher.setEnabled(true);
 			
-			//load upper-left pegboard (0,0).
-			this.image_view.setIcon(this.pattern.getPegboard(0, 0));
-			
-			//save pegboard index.
-			this.pegboard_index = new Point(0,0);
+			//load the pegboard (0,0).
+			this.onPegboardSwitch(new Point(0,0));
 			
 		// Show error dialog if anything happens
 		} catch (IOException io_err) {
@@ -111,8 +109,14 @@ public class BeadPatternPanel extends JPanel implements ActionListener{
 		
 		// if the pegboard switcher button was pressed.
 		case "SwitchPegboard":
-			new SwitchPegoardDialog(this.parent,this.pattern.getSize(),this.pegboard_index).setVisible(true);
+			new SwitchPegoardDialog(this, this.parent,this.pattern.getSize(),this.pegboard_index).setVisible(true);
 		break;
 		}
+	}
+
+	@Override
+	public void onPegboardSwitch(Point index) {
+		this.pegboard_index = index;
+		this.image_view.setIcon(this.pattern.getPegboard(index.x, index.y));
 	}
 }
