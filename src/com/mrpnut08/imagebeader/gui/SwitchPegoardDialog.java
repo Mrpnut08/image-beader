@@ -15,13 +15,13 @@ import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 
 import com.mrpnut08.imagebeader.actions.PegboardSwitchAction;
-import com.mrpnut08.imagebeader.listener.OnPegboardSwitchListener;
+import com.mrpnut08.imagebeader.listener.PegboardSwitcherListener;
 
 public class SwitchPegoardDialog extends JDialog implements ActionListener{
 
 	private static final long serialVersionUID = 1L;
 
-	public SwitchPegoardDialog(OnPegboardSwitchListener listener, Frame parent, Dimension size, Point index) {
+	public SwitchPegoardDialog(PegboardSwitcherListener listener, Frame parent, Dimension size, Point index) {
 		super(parent, "Pattern Details");
 		this.setResizable(true);
 		this.setMinimumSize(new Dimension(400, 280));

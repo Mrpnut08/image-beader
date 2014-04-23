@@ -7,6 +7,7 @@ import java.awt.Frame;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.IOException;
 
 import javax.swing.JButton;
@@ -17,9 +18,9 @@ import javax.swing.JScrollPane;
 
 import com.mrpnut08.imagebeader.beads.BeadPallete;
 import com.mrpnut08.imagebeader.imaging.BeadedImage;
-import com.mrpnut08.imagebeader.listener.OnPegboardSwitchListener;
+import com.mrpnut08.imagebeader.listener.PegboardSwitcherListener;
 
-public class BeadPatternPanel extends JPanel implements ActionListener, OnPegboardSwitchListener{
+public class BeadPatternPanel extends JPanel implements ActionListener, PegboardSwitcherListener{
 
 	private static final long serialVersionUID = 1L;
 	
@@ -118,5 +119,10 @@ public class BeadPatternPanel extends JPanel implements ActionListener, OnPegboa
 	public void onPegboardSwitch(Point index) {
 		this.pegboard_index = index;
 		this.image_view.setIcon(this.pattern.getPegboard(index.x, index.y));
+	}
+
+	@Override
+	public File getPegboardThumbnail(int x, int y) {
+		return this.pattern.getPegboardThumbnail(x, y);
 	}
 }

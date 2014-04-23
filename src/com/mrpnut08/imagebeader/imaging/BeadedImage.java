@@ -39,7 +39,8 @@ public class BeadedImage {
 	private File thumbnail,
 				 fullpattern;
 	
-	private ArrayList<File> board_pattern;
+	private ArrayList<File> board_pattern,
+							pegboard_thumbnail;
 	
 	private Dimension pattern_size;
 	private HashSet<String> colors_used;
@@ -56,6 +57,7 @@ public class BeadedImage {
 		
 		//Initialize the pegboards Arraylist.
 		this.board_pattern = new ArrayList<File>();
+		this.pegboard_thumbnail = new ArrayList<File>();
 		
 		// Initialize the color_used HashSet.
 		this.colors_used = new HashSet<String>();
@@ -85,6 +87,10 @@ public class BeadedImage {
 	
 	public PreviewImageIcon getThumbnail() {
 		return (new PreviewImageIcon(this.thumbnail.getPath()));
+	}
+	
+	public File getPegboardThumbnail(int x, int y) {
+		return this.pegboard_thumbnail.get(this.getCoordinate(x, y));
 	}
 	
 	/** (Getter)
@@ -202,8 +208,13 @@ public class BeadedImage {
 			board.delete();
 		}
 		
-		// Clear the ArrayList. 
+		for(File thumbnail: this.pegboard_thumbnail){
+			thumbnail.delete();
+		}
+		
+		// Clear the ArrayLists. 
 		this.board_pattern.clear();
+		this.pegboard_thumbnail.clear();
 		
 		// Calculate the Dimensions of the pattern in pegboards.
 		this.pattern_size = new Dimension((int)Math.ceil(source.getWidth()/29f),
@@ -219,12 +230,20 @@ public class BeadedImage {
 				// Create temporal file to store the pattern
 				this.board_pattern.add(File.createTempFile(this.TEMP_PREFFIX+"pegboard-"+this.getCoordinate(x, y)+"-",
 														   this.TEMP_SUFFIX));
-				
 				this.board_pattern.get(this.getCoordinate(x, y)).deleteOnExit();
-
+				
+				this.pegboard_thumbnail.add(File.createTempFile(this.TEMP_PREFFIX+"pegboard_thumbnail-"+this.getCoordinate(x, y)+"-",
+						   this.TEMP_SUFFIX));
+				this.pegboard_thumbnail.get(this.getCoordinate(x, y)).deleteOnExit();
+				
+				
 				rectangle = new Rectangle(x*29,y*29,
 										 (x*29 +28>= source.getWidth())? source.getWidth()-x*29 : 29,
 										 (y*29 +28>= source.getHeight())? source.getHeight()-y*29 : 29);
+				
+				ImageIO.write(this.generateImage(source, pallete, rectangle, true, text_size),
+					      this.TEMP_SUFFIX, 
+					      this.pegboard_thumbnail.get(this.getCoordinate(x, y)));
 				
 				ImageIO.write(this.generateImage(source, pallete, rectangle, false, text_size),
 						      this.TEMP_SUFFIX, 

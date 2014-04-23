@@ -4,17 +4,19 @@ import java.awt.Point;
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
+import javax.swing.ImageIcon;
 
-import com.mrpnut08.imagebeader.listener.OnPegboardSwitchListener;
+import com.mrpnut08.imagebeader.listener.PegboardSwitcherListener;
 
 public class PegboardSwitchAction extends AbstractAction {
 	
 	private static final long serialVersionUID = 1L;
 	
 	private Point pegboard_index;
-	private OnPegboardSwitchListener listener;
+	private PegboardSwitcherListener listener;
 	
-	public PegboardSwitchAction (OnPegboardSwitchListener listener, int x, int y) {
+	public PegboardSwitchAction (PegboardSwitcherListener listener, int x, int y) {
+		super("",new ImageIcon(listener.getPegboardThumbnail(x, y).getPath()));
 		this.listener = listener;
 		this.pegboard_index = new Point(x,y);
 	}
