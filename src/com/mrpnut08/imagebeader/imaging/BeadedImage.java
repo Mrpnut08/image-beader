@@ -252,19 +252,19 @@ public class BeadedImage {
 		}
 	}
 	
-	private void createFullPattern(BufferedImage source, BeadPallete pallete, int text_size) throws IOException {
-		
-		this.fullpattern = this.recreateTempFile(this.fullpattern, "fullpattern");
-		
-		ImageIO.write(
-				this.generateImage(source, 
-								   pallete,
-								   new Rectangle(0,0,source.getWidth(),source.getHeight()),
-								   false,
-								   text_size),
-				this.TEMP_SUFFIX,
-				this.fullpattern);
-	}
+//	private void createFullPattern(BufferedImage source, BeadPallete pallete, int text_size) throws IOException {
+//		
+//		this.fullpattern = this.recreateTempFile(this.fullpattern, "fullpattern");
+//		
+//		ImageIO.write(
+//				this.generateImage(source, 
+//								   pallete,
+//								   new Rectangle(0,0,source.getWidth(),source.getHeight()),
+//								   false,
+//								   text_size),
+//				this.TEMP_SUFFIX,
+//				this.fullpattern);
+//	}
 	
 	private int getCoordinate(int x, int y) {
 		return (y*this.pattern_size.width + x);
