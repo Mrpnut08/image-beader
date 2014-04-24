@@ -122,8 +122,8 @@ public class BeadedImage {
 		int square_size = (thumbnail)? 2 : this.SQUARE_SIZE;
 		
 		int tx, ty;
-		BufferedImage image = new BufferedImage( (int)dimensions.getWidth()*square_size,
-										(int)dimensions.getHeight()*square_size,
+		BufferedImage image = new BufferedImage( (int)29*square_size,
+										(int)29*square_size,
 										BufferedImage.TYPE_INT_ARGB);
 		
 		canvas = image.createGraphics();
@@ -136,12 +136,17 @@ public class BeadedImage {
 		}
 		
 		
-		for (int y = 0; y < dimensions.getHeight(); y++) {
-			for(int x = 0; x < dimensions.getWidth(); x++) {
+		for (int y = 0; y < 29; y++) {
+			for(int x = 0; x < 29; x++) {
 				tx = x * square_size;
 				ty = y * square_size;
 				
-				bead_color = pallete.findColorEquivalent(new Color(source.getRGB(dimensions.x + x,dimensions.y + y),true));
+				if(x < dimensions.getWidth() && y < dimensions.getHeight()){
+					bead_color = pallete.findColorEquivalent(new Color(source.getRGB(dimensions.x + x,dimensions.y + y),true));
+				}else {
+					bead_color = BeadColor.BLANK;
+				}
+				
 				canvas.setColor(bead_color.getColor());
 				canvas.fillRect(tx, ty, square_size, square_size);
 				if (!thumbnail) {
