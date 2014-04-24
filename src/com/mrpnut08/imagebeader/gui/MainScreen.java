@@ -36,7 +36,7 @@ public class MainScreen extends JFrame implements ActionListener,
 
 		try {
 			this.pallete = new BeadPallete(
-					new File(this.getClass().getClassLoader().getResource("perler_pallete.xml").toURI()));
+					new File(this.getClass().getClassLoader().getResource("./perler_pallete.xml").toURI()));
 		} catch (Exception io_error) {
 			JOptionPane.showMessageDialog(this, io_error.getMessage());
 		} // ~try
