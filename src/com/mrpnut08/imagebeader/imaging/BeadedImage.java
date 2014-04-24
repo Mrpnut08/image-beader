@@ -114,15 +114,15 @@ public class BeadedImage {
 		return this.pattern_size;
 	}
 	
-	private BufferedImage generateImage (BufferedImage source, BeadPallete pallete, Rectangle dimensions, boolean thumbnail, int text_size) {
+	private BufferedImage generateImage (BufferedImage source, BeadPallete pallete, Dimension pegboard, Rectangle dimensions, boolean thumbnail, int text_size) {
 		Graphics2D canvas;
 		BeadColor bead_color;
 		
 		int square_size = (thumbnail)? 2 : this.SQUARE_SIZE;
 		
 		int tx, ty;
-		BufferedImage image = new BufferedImage( (int)29*square_size,
-										(int)29*square_size,
+		BufferedImage image = new BufferedImage( (int)pegboard.width*square_size,
+										(int)pegboard.height*square_size,
 										BufferedImage.TYPE_INT_ARGB);
 		
 		canvas = image.createGraphics();
@@ -135,8 +135,8 @@ public class BeadedImage {
 		}
 		
 		
-		for (int y = 0; y < 29; y++) {
-			for(int x = 0; x < 29; x++) {
+		for (int y = 0; y < pegboard.height; y++) {
+			for(int x = 0; x < pegboard.width; x++) {
 				tx = x * square_size;
 				ty = y * square_size;
 				
@@ -198,6 +198,7 @@ public class BeadedImage {
 		ImageIO.write(
 				this.generateImage(source, 
 								   pallete,
+								   new Dimension(source.getWidth(), source.getHeight()),
 								   new Rectangle(0,0,source.getWidth(),source.getHeight()),
 								   true,
 								   1),
@@ -245,11 +246,11 @@ public class BeadedImage {
 										 (x*29 +28>= source.getWidth())? source.getWidth()-x*29 : 29,
 										 (y*29 +28>= source.getHeight())? source.getHeight()-y*29 : 29);
 				
-				ImageIO.write(this.generateImage(source, pallete, rectangle, true, text_size),
+				ImageIO.write(this.generateImage(source, pallete, new Dimension(29,29), rectangle, true, text_size),
 					      this.TEMP_SUFFIX, 
 					      this.pegboard_thumbnail.get(this.getCoordinate(x, y)));
 				
-				ImageIO.write(this.generateImage(source, pallete, rectangle, false, text_size),
+				ImageIO.write(this.generateImage(source, pallete, new Dimension(29,29), rectangle, false, text_size),
 						      this.TEMP_SUFFIX, 
 						      this.board_pattern.get(this.getCoordinate(x, y)));
 			}
