@@ -118,7 +118,7 @@ public class BeadedImage {
 		Graphics2D canvas;
 		BeadColor bead_color;
 		
-		int square_size = (thumbnail)? 2 : this.SQUARE_SIZE;
+		int square_size = (thumbnail)? 3 : this.SQUARE_SIZE;
 		
 		int tx, ty;
 		BufferedImage image = new BufferedImage( (int)pegboard.width*square_size,

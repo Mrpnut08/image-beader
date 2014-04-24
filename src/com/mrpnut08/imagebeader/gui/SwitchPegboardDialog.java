@@ -24,9 +24,9 @@ public class SwitchPegboardDialog extends JDialog implements ActionListener{
 
 	public SwitchPegboardDialog(PegboardSwitcherListener listener, Frame parent, Dimension size, Point index) {
 		super(parent, "Switch Pegboard");
-		this.setResizable(true);
-		this.setMinimumSize(new Dimension(58*(size.width+2), 
-										  58*(size.height+2)));
+		this.setResizable(false);
+		this.setMinimumSize(new Dimension(87*(size.width+2), 
+										  87*(size.height+2)));
 		
 		this.setLayout(new BorderLayout());
 
@@ -43,7 +43,7 @@ public class SwitchPegboardDialog extends JDialog implements ActionListener{
 				JToggleButton button = new JToggleButton();
 				
 				button.setSelected((x == index.x && y == index.y));
-				button.setPreferredSize(new Dimension(58,58));
+				button.setPreferredSize(new Dimension(87,87));
 				button.setAction(new PegboardSwitchAction(listener, x, y));
 				
 				constraint.gridx = x;
