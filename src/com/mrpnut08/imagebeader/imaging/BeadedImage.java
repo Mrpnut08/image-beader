@@ -31,7 +31,7 @@ public class BeadedImage {
 	public final static int TEXT_SMALL = 3;
 	public final static int TEXT_LARGE = 2;
 	
-	private final int SQUARE_SIZE = 28;
+	private final int SQUARE_SIZE = 24;
 	
 	private final String TEMP_PREFFIX = "ib-";
 	private final String TEMP_SUFFIX = "png";
@@ -119,7 +119,7 @@ public class BeadedImage {
 		Graphics2D canvas;
 		BeadColor bead_color;
 		
-		int square_size = (thumbnail)? 1 : this.SQUARE_SIZE;
+		int square_size = (thumbnail)? 2 : this.SQUARE_SIZE;
 		
 		int tx, ty;
 		BufferedImage image = new BufferedImage( (int)dimensions.getWidth()*square_size,
