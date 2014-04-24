@@ -34,6 +34,7 @@ public class PatternDetailsDialog extends JDialog implements ActionListener{
 		thumbnail.setVerticalTextPosition(JLabel.TOP);
 		thumbnail.setHorizontalTextPosition(JLabel.CENTER);
 		thumbnail.setAlignmentY(TOP_ALIGNMENT);
+		thumbnail.setMinimumSize(new Dimension(200,200));
 		panel.add(thumbnail);
 		
 		//Load the preview image.

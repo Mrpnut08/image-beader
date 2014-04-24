@@ -17,11 +17,6 @@ public class PreviewImageIcon extends ImageIcon {
 		super();
 	}
 	
-	public PreviewImageIcon(String filepath) {
-		super(filepath);
-		this.setImage(this.getImage());
-	}
-	
 	/** (Setter)
 	 * Sets the image scaled down to fit a 200 by 200 pixel square.
 	 * the scaled image maintains it's aspect ratio. 

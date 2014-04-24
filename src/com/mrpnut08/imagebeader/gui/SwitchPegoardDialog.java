@@ -5,7 +5,6 @@ import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -35,7 +34,6 @@ public class SwitchPegoardDialog extends JDialog implements ActionListener{
 		GridBagConstraints constraint = new GridBagConstraints();
 		
 		// Create content Panel.
-		// JPanel panel = new JPanel(new GridLayout(size.height, size.width));
 		JPanel panel = new JPanel(layout);
 		
 		ButtonGroup group = new ButtonGroup();

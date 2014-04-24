@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -105,7 +106,14 @@ public class BeadPatternPanel extends JPanel implements ActionListener, Pegboard
 		
 		// Open pattern details window if the pattern datails button was pressed.
 		case "PatternDetails":
-			new PatternDetailsDialog(this.parent, this.pattern.getThumbnail(), this.pattern.getUsedColorList()).setVisible(true);
+			try {
+			PreviewImageIcon thumbnail = new PreviewImageIcon();
+			thumbnail.setImage(ImageIO.read(this.pattern.getPatternThumbnail()));
+			
+			new PatternDetailsDialog(this.parent, thumbnail, this.pattern.getUsedColorList()).setVisible(true);
+			} catch (IOException io_err) {
+				JOptionPane.showMessageDialog(this, io_err.getMessage());
+			}
 		break;
 		
 		// if the pegboard switcher button was pressed.
