@@ -18,11 +18,11 @@ import javax.swing.JToggleButton;
 import com.mrpnut08.imagebeader.actions.PegboardSwitchAction;
 import com.mrpnut08.imagebeader.listener.PegboardSwitcherListener;
 
-public class SwitchPegoardDialog extends JDialog implements ActionListener{
+public class SwitchPegboardDialog extends JDialog implements ActionListener{
 
 	private static final long serialVersionUID = 1L;
 
-	public SwitchPegoardDialog(PegboardSwitcherListener listener, Frame parent, Dimension size, Point index) {
+	public SwitchPegboardDialog(PegboardSwitcherListener listener, Frame parent, Dimension size, Point index) {
 		super(parent, "Switch Pegboard");
 		this.setResizable(true);
 		this.setMinimumSize(new Dimension(58*(size.width+2), 
