@@ -3,6 +3,8 @@ package com.mrpnut08.imagebeader.gui;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Frame;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
@@ -22,23 +24,35 @@ public class SwitchPegoardDialog extends JDialog implements ActionListener{
 	private static final long serialVersionUID = 1L;
 
 	public SwitchPegoardDialog(PegboardSwitcherListener listener, Frame parent, Dimension size, Point index) {
-		super(parent, "Pattern Details");
+		super(parent, "Switch Pegboard");
 		this.setResizable(true);
-		this.setMinimumSize(new Dimension(400, 280));
+		this.setMinimumSize(new Dimension(58*(size.width+2), 
+										  58*(size.height+2)));
+		
 		this.setLayout(new BorderLayout());
 
+		GridBagLayout layout = new GridBagLayout();
+		GridBagConstraints constraint = new GridBagConstraints();
+		
 		// Create content Panel.
-		JPanel panel = new JPanel(new GridLayout(size.height, size.width));
+		// JPanel panel = new JPanel(new GridLayout(size.height, size.width));
+		JPanel panel = new JPanel(layout);
 		
 		ButtonGroup group = new ButtonGroup();
 		
 		for (int y = 0; y < size.height; y++) {
 			for (int x = 0; x < size.width; x++) {
 				JToggleButton button = new JToggleButton();
+				
 				button.setSelected((x == index.x && y == index.y));
+				button.setPreferredSize(new Dimension(58,58));
 				button.setAction(new PegboardSwitchAction(listener, x, y));
+				
+				constraint.gridx = x;
+				constraint.gridy = y;
+				
 				group.add(button);
-				panel.add(button);
+				panel.add(button, constraint);
 			}
 		}
 		
