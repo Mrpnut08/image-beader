@@ -32,8 +32,8 @@ public class SwitchPegoardDialog extends JDialog implements ActionListener{
 		
 		ButtonGroup group = new ButtonGroup();
 		
-		for (int y = 0; y < size.width; y++) {
-			for (int x = 0; x < size.height; x++) {
+		for (int y = 0; y < size.height; y++) {
+			for (int x = 0; x < size.width; x++) {
 				JToggleButton button = new JToggleButton();
 				button.setSelected((x == index.x && y == index.y));
 				button.setAction(new PegboardSwitchAction(listener, x, y));
