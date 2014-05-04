@@ -63,8 +63,7 @@ public class ImageLoadingPanel extends JPanel implements ActionListener {
 	 * Action for open_file_button. Displays the file chooser for the user to
 	 * select a file and notifies that a new image has been loaded.
 	 * 
-	 * @param action
-	 *            not used.
+	 * @param action not used.
 	 */
 	@Override
 	public void actionPerformed(ActionEvent action) {

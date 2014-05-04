@@ -35,4 +35,18 @@ public class BeadColor {
 			average /= 3;
 			return (average < 192) ? Color.WHITE : Color.BLACK;
 	}
+	
+	public void setId(String id){
+		this.id = id;
+	}
+	
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	public void setColor(Color color) {
+		this.color = color;
+	}
+	
+	
 }
