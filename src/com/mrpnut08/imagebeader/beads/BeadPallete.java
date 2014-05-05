@@ -38,6 +38,8 @@ public class BeadPallete {
 			return color;
 		}
 		
+		
+		
 		while (iterator.hasNext()) {
 			current = iterator.next();
 			distance = this.findDistance(sample, current.getColor());
@@ -58,4 +60,5 @@ public class BeadPallete {
 		difference = Math.sqrt(difference);
 		return difference;
 	}
+	
 }
