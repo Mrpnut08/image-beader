@@ -7,6 +7,7 @@ import java.io.File;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -81,6 +82,9 @@ public class MainScreen extends JFrame implements ActionListener,
 		this.beading_button.addActionListener(this);
 		this.beading_button.setEnabled(false);
 
+		// Create Pegboard Option.
+		//Create Beading Option Panel
+		
 		panel.add(this.beading_button);
 		return (panel);
 	}
