@@ -1,6 +1,5 @@
 package com.mrpnut08.imagebeader.imaging;
 
-import java.awt.Color;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -30,8 +29,8 @@ public class UnbeadedImage {
 		this.image = ImageIO.read(file);
 	}
 	
-	public ImageIcon getImageIcon() {
-		return (new ImageIcon(this.image));
+	public Image getImage() {
+		return this.image;
 	}
 	
 	public ImageIcon getScaledImageIcon(float percent) {
@@ -51,9 +50,5 @@ public class UnbeadedImage {
 	
 	public int getHeight() {
 		return this.image.getHeight();
-	}
-	
-	public Color getPixel(int x, int y) {
-		return new Color(this.image.getRGB(x, y),true);
 	}
 }

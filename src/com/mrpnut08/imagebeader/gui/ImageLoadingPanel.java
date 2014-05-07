@@ -2,7 +2,6 @@ package com.mrpnut08.imagebeader.gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
@@ -14,10 +13,11 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import com.mrpnut08.imagebeader.imaging.UnbeadedImage;
 import com.mrpnut08.imagebeader.listener.OnImageLoadListener;
 
 /**
- * Creates a simple panel where
+ * Creates the panel the user loads the image.
  * 
  * @author Alfredo Giscombe (Mrpnut08)
  * 
@@ -27,8 +27,8 @@ public class ImageLoadingPanel extends JPanel implements ActionListener {
 	private static final long serialVersionUID = 1L;
 
 	private JLabel image;
-	private String filepath;
 	private OnImageLoadListener listener;
+	private UnbeadedImage source;
 
 	/**
 	 * Creates the Panel and its content.
@@ -55,8 +55,8 @@ public class ImageLoadingPanel extends JPanel implements ActionListener {
 		open_file_button.addActionListener(this);
 		this.add(open_file_button);
 		
-		//Instantiate filepath to empty.
-		this.filepath = "";
+		//
+		this.source = new UnbeadedImage();
 	}
 
 	/**
@@ -81,10 +81,10 @@ public class ImageLoadingPanel extends JPanel implements ActionListener {
 		// listener.
 		try {
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
-			this.loadPreviewImage(filebrowser.getSelectedFile());
+			this.source.loadImage(filebrowser.getSelectedFile());
 			this.image.setText(filebrowser.getSelectedFile().getName());
-			this.filepath = filebrowser.getSelectedFile().getPath();
-			this.listener.onImageLoad(this.filepath);
+			this.loadPreviewImage();
+			this.listener.onImageLoad(this.source.getFilePath());
 		}
 		} catch (IOException io_error) {
 			JOptionPane.showMessageDialog(this, io_error.getMessage());
@@ -92,12 +92,12 @@ public class ImageLoadingPanel extends JPanel implements ActionListener {
 	}
 	
 	public String getFilePath() {
-		return this.filepath;
+		return this.source.getFilePath();
 	}
 
-	private void loadPreviewImage(File file) throws IOException {
+	private void loadPreviewImage() throws IOException {
 		PreviewImageIcon image = new PreviewImageIcon();
-		image.setImage(ImageIO.read(file));
+		image.setImage(this.source.getImage());
 		this.image.setIcon(image);
 	}
 }
