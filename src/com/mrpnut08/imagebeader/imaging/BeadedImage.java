@@ -65,6 +65,8 @@ public class BeadedImage {
 	
 	
 	public void generateBeadSet(String filepath, BeadPallete pallete, float text_size) throws IOException {
+		this.colors_used.clear();
+		
 		BufferedImage source = ImageIO.read(new File(filepath));
 		
 		this.pattern_size = new Dimension();
