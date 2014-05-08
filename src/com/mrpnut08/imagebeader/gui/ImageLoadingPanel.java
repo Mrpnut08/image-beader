@@ -1,5 +1,6 @@
 package com.mrpnut08.imagebeader.gui;
 
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -93,6 +94,10 @@ public class ImageLoadingPanel extends JPanel implements ActionListener {
 	
 	public String getFilePath() {
 		return this.source.getFilePath();
+	}
+	
+	public Dimension getImageDimensions() {
+		return new Dimension(source.getWidth(), source.getHeight());
 	}
 
 	private void loadPreviewImage() throws IOException {

@@ -27,8 +27,9 @@ import com.mrpnut08.imagebeader.beads.BeadPallete;
 public class BeadedImage {
 	
 	
-	public final static int TEXT_SMALL = 3;
-	public final static int TEXT_LARGE = 2;
+	public final static float TEXT_SMALL = 2.5f;
+	public final static float TEXT_LARGE = 2;
+	public final static float TEXT_NONE = 0;
 	
 	private final int SQUARE_SIZE = 24;
 	
@@ -63,7 +64,7 @@ public class BeadedImage {
 	}
 	
 	
-	public void generateBeadSet(String filepath, BeadPallete pallete, int text_size) throws IOException {
+	public void generateBeadSet(String filepath, BeadPallete pallete, float text_size) throws IOException {
 		BufferedImage source = ImageIO.read(new File(filepath));
 		
 		this.pattern_size = new Dimension();
@@ -114,7 +115,7 @@ public class BeadedImage {
 		return this.pattern_size;
 	}
 	
-	private BufferedImage generateImage (BufferedImage source, BeadPallete pallete, Dimension pegboard, Rectangle dimensions, boolean thumbnail, int text_size) {
+	private BufferedImage generateImage (BufferedImage source, BeadPallete pallete, Dimension pegboard, Rectangle dimensions, boolean thumbnail, float text_size) {
 		Graphics2D canvas;
 		BeadColor bead_color;
 		
@@ -127,10 +128,10 @@ public class BeadedImage {
 		
 		canvas = image.createGraphics();
 		
-		if(!thumbnail) {
+		if(!thumbnail && text_size != BeadedImage.TEXT_NONE) {
 			Font font = new Font(Font.MONOSPACED,
 								 Font.PLAIN,
-								 this.SQUARE_SIZE / text_size);
+								 Math.round(this.SQUARE_SIZE / text_size));
 			canvas.setFont(font);
 		}
 		
@@ -152,7 +153,9 @@ public class BeadedImage {
 					canvas.setColor(Color.LIGHT_GRAY);
 					canvas.drawRect(tx, ty, square_size, square_size);
 					canvas.setColor(bead_color.getContrastingColor());
-					canvas.drawString(bead_color.getId(), tx, (y+1)* square_size);
+					if (text_size != BeadedImage.TEXT_NONE){
+						canvas.drawString(bead_color.getId(), tx, (y+1)* square_size);
+					}
 				}
 				image.flush();
 				
@@ -206,7 +209,7 @@ public class BeadedImage {
 				this.thumbnail);
 	}
 	
-	private void createPegboards(BufferedImage source, BeadPallete pallete, int text_size) throws IOException {
+	private void createPegboards(BufferedImage source, BeadPallete pallete, float text_size) throws IOException {
 		
 		// Delete already existing temp from the pegboards ArrayList.
 		for(File board: this.board_pattern){

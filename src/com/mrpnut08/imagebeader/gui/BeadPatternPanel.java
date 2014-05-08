@@ -40,7 +40,7 @@ public class BeadPatternPanel extends JPanel implements ActionListener, Pegboard
 		
 		// Call super class constructor to initialize JPanel.
 		super();
-		this.setMinimumSize(new Dimension(440,480));
+		this.setMinimumSize(new Dimension(415,480));
 		this.setLayout(new BorderLayout());
 
 		// Store parent Frame used for calling the dialogs.
@@ -78,7 +78,7 @@ public class BeadPatternPanel extends JPanel implements ActionListener, Pegboard
 		button_panel.add(pegboard_switcher);
 	}
 	
-	public void generatePattern (String filepath, BeadPallete pallete, int text_size) {
+	public void generatePattern (String filepath, BeadPallete pallete, float text_size) {
 		
 		// Attempt to generate the bead pattern 
 		try {

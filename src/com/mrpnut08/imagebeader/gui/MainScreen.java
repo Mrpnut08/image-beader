@@ -7,7 +7,6 @@ import java.io.File;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -20,14 +19,13 @@ import com.mrpnut08.imagebeader.listener.OnImageLoadListener;
 public class MainScreen extends JFrame implements ActionListener,
 		OnImageLoadListener {
 
-	private static final long serialVersionUID = 1L;
-
 	private BeadPallete pallete;
 	
 	private JButton beading_button;
 
 	private ImageLoadingPanel image_loader;
 	private BeadPatternPanel result_panel;
+	private PatternSettingPanel settings_panel;
 
 	public MainScreen() {
 		super("Image Beader");
@@ -54,7 +52,7 @@ public class MainScreen extends JFrame implements ActionListener,
 			return;
 		}
 		
-		this.result_panel.generatePattern(this.image_loader.getFilePath(), this.pallete, BeadedImage.TEXT_LARGE);		
+		this.result_panel.generatePattern(this.image_loader.getFilePath(), this.pallete, this.settings_panel.getTextSize());		
 	}
 
 	private void generateGUIContent() {
@@ -70,27 +68,30 @@ public class MainScreen extends JFrame implements ActionListener,
 		// Create main panel.
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-		panel.setMinimumSize(new Dimension(200, 480));
+		panel.setMinimumSize(new Dimension(225, 480));
 
 		// Create ImageLoadingPanel.
 		this.image_loader = new ImageLoadingPanel(this);
 		panel.add(this.image_loader);
-
+	
+		this.settings_panel = new PatternSettingPanel();
+		panel.add(this.settings_panel);
+		
+		// Create the "Generate Bead Pattern" button.
 		this.beading_button = new JButton("Generate Bead Pattern");
 		this.beading_button.setAlignmentX(CENTER_ALIGNMENT);
 		this.beading_button.setActionCommand("BeadImage");
 		this.beading_button.addActionListener(this);
 		this.beading_button.setEnabled(false);
-
-		// Create Pegboard Option.
-		//Create Beading Option Panel
-		
 		panel.add(this.beading_button);
+		
+		// Return the finished panel.
 		return (panel);
 	}
 
 	@Override
 	public void onImageLoad(String filepath) {
 			this.beading_button.setEnabled(true);
+			this.settings_panel.SetImageSize(this.image_loader.getImageDimensions());
 	}
 }
