@@ -1,12 +1,12 @@
 package com.mrpnut08.imagebeader.imaging;
 
+import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 
 public class UnbeadedImage {
 	
@@ -33,11 +33,11 @@ public class UnbeadedImage {
 		return this.image;
 	}
 	
-	public ImageIcon getScaledImageIcon(float percent) {
-		int new_width = (int)Math.floor(this.image.getWidth() * percent / 100);
-		int	new_height = (int)Math.floor(this.image.getHeight() * percent / 100);
+	public Image getResizedImage (Dimension pegboard_size){
+		Image scaled_image;
 		
-		return (new ImageIcon(this.image.getScaledInstance(new_width,new_height, Image.SCALE_DEFAULT)));
+		
+		return null;
 	}
 	
 	public String getFilePath() {
