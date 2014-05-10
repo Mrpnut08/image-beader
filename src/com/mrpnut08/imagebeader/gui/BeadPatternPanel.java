@@ -7,6 +7,7 @@ import java.awt.Frame;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
@@ -78,12 +79,12 @@ public class BeadPatternPanel extends JPanel implements ActionListener, Pegboard
 		button_panel.add(pegboard_switcher);
 	}
 	
-	public void generatePattern (String filepath, BeadPallete pallete, float text_size) {
+	public void generatePattern (BufferedImage image, BeadPallete pallete, float text_size) {
 		
 		// Attempt to generate the bead pattern 
 		try {
 			
-			this.pattern.generateBeadSet(filepath, pallete, text_size);
+			this.pattern.generateBeadSet(image, pallete, text_size);
 		
 			// Enable Buttons.
 			this.pattern_details.setEnabled(true);

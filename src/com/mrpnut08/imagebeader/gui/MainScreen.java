@@ -3,6 +3,7 @@ package com.mrpnut08.imagebeader.gui;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.File;
 
 import javax.swing.BoxLayout;
@@ -13,7 +14,6 @@ import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
 import com.mrpnut08.imagebeader.beads.BeadPallete;
-import com.mrpnut08.imagebeader.imaging.BeadedImage;
 import com.mrpnut08.imagebeader.listener.OnImageLoadListener;
 
 public class MainScreen extends JFrame implements ActionListener,
@@ -52,7 +52,12 @@ public class MainScreen extends JFrame implements ActionListener,
 			return;
 		}
 		
-		this.result_panel.generatePattern(this.image_loader.getFilePath(), this.pallete, this.settings_panel.getTextSize());		
+		BufferedImage image = (this.settings_panel.needResizing())? this.image_loader.getScaledImage(this.settings_panel.getResizeSize()) :
+																	this.image_loader.getImage();
+		
+		this.result_panel.generatePattern(image,
+										  this.pallete, 
+										  this.settings_panel.getTextSize());		
 	}
 
 	private void generateGUIContent() {

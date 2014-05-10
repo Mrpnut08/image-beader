@@ -3,6 +3,7 @@ package com.mrpnut08.imagebeader.gui;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
@@ -94,6 +95,14 @@ public class ImageLoadingPanel extends JPanel implements ActionListener {
 	
 	public String getFilePath() {
 		return this.source.getFilePath();
+	}
+	
+	public BufferedImage getImage() {
+		return this.source.getImage();
+	}
+	
+	public BufferedImage getScaledImage(Dimension pegboards){
+		return this.source.getResizedImage(pegboards);
 	}
 	
 	public Dimension getImageDimensions() {

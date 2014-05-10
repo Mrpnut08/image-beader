@@ -136,7 +136,11 @@ public class PatternSettingPanel extends JPanel implements ActionListener{
 	}
 	
 	public boolean needResizing() {
-		return (this.resizedradio.isSelected() && ((int)widthmodel.getValue() > 0 || (int)heightmodel.getValue() > 0));
+		return (this.resizedradio.isSelected() && ((int)widthmodel.getValue() > 0 && (int)heightmodel.getValue() > 0));
+	}
+	
+	public Dimension getResizeSize(){
+		return new Dimension((int)widthmodel.getValue(), (int)heightmodel.getValue());
 	}
 	
 	public void SetImageSize (Dimension imagesize){
