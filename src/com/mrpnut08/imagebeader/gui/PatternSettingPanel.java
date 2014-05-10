@@ -68,7 +68,7 @@ public class PatternSettingPanel extends JPanel implements ActionListener{
 		JLabel sizelabel = new JLabel("Size Settings");
 		constrains.gridx = 0;
 		constrains.gridy = 0;
-		constrains.gridwidth = 3;
+		constrains.gridwidth = 5;
 		pane.add(sizelabel,constrains);
 		
 		ButtonGroup size_group = new ButtonGroup();
@@ -92,19 +92,29 @@ public class PatternSettingPanel extends JPanel implements ActionListener{
 		widthmodel = new SpinnerNumberModel(0, 0, 10, 1);
 		heightmodel = new SpinnerNumberModel(0,0,10,1);
 		
+		JLabel widthlabel = new JLabel("Width:");
+		widthlabel.setAlignmentX(CENTER_ALIGNMENT);
+		constrains.gridx = 0;
+		pane.add(widthlabel,constrains);
+		
 		widthfield = new JSpinner(widthmodel);
 		widthfield.setEnabled(false);
-		constrains.gridx = 0;
+		constrains.gridx = 1;
 		pane.add(widthfield,constrains);
 		
 		JLabel divider = new JLabel(" x ");
 		divider.setAlignmentX(CENTER_ALIGNMENT);
-		constrains.gridx = 1;
+		constrains.gridx = 2;
 		pane.add(divider,constrains);
+		
+		JLabel heightlabel = new JLabel("Height:");
+		heightlabel.setAlignmentX(CENTER_ALIGNMENT);
+		constrains.gridx = 3;
+		pane.add(heightlabel,constrains);
 		
 		heightfield = new JSpinner(heightmodel);
 		heightfield.setEnabled(false);
-		constrains.gridx = 2;
+		constrains.gridx = 4;
 		pane.add(heightfield,constrains);
 		
 		return(pane);
