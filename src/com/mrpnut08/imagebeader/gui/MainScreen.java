@@ -41,7 +41,7 @@ import com.mrpnut08.imagebeader.listener.OnImageLoadListener;
   * @author Alfredo Giscombe (mrpnut08)
   */
 public class MainScreen extends JFrame implements ActionListener,
-		OnImageLoadListener {
+												  OnImageLoadListener {
 
 	private BeadPallete pallete;
 	
@@ -93,6 +93,10 @@ public class MainScreen extends JFrame implements ActionListener,
 		this.add(root_content_pane);
 	}
 
+	/** Creates the pattern option panel which holds the pattern generation options.
+	  * 
+	  * @return the left panel of the split view.
+	  */
 	private JPanel generateOptionPanel() {
 		// Create main panel.
 		JPanel panel = new JPanel();
@@ -103,6 +107,8 @@ public class MainScreen extends JFrame implements ActionListener,
 		this.image_loader = new ImageLoadingPanel(this);
 		panel.add(this.image_loader);
 	
+		// Create PatternSettingPanel which handles the settings the user 
+		// inputs in order to generate the pattern.
 		this.settings_panel = new PatternSettingPanel();
 		panel.add(this.settings_panel);
 		

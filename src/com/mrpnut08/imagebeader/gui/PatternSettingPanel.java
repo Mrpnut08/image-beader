@@ -20,6 +20,7 @@
 package com.mrpnut08.imagebeader.gui;
 
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -66,6 +67,7 @@ public class PatternSettingPanel extends JPanel implements ActionListener{
 		constrains.fill = GridBagConstraints.HORIZONTAL;
 		
 		JLabel sizelabel = new JLabel("Size Settings");
+		sizelabel.setFont(sizelabel.getFont().deriveFont(Font.BOLD));
 		constrains.gridx = 0;
 		constrains.gridy = 0;
 		constrains.gridwidth = 5;
@@ -126,6 +128,7 @@ public class PatternSettingPanel extends JPanel implements ActionListener{
 		constrains.fill = GridBagConstraints.HORIZONTAL;
 		
 		JLabel textsizelabel = new JLabel("Text Size");
+		textsizelabel.setFont(textsizelabel.getFont().deriveFont(Font.BOLD));
 		constrains.gridx = 0;
 		constrains.gridy = 0;
 		constrains.gridwidth = 3;
