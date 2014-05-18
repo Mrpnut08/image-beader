@@ -64,6 +64,9 @@ public class BeadedImage {
 	private Dimension pattern_size;
 	private HashSet<String> colors_used;
 	
+	private float text_size;
+	private BufferedImage image;
+	private BeadPallete pallete;
 	
 	/** Instantiate the file variables. and the colors_used set.
 	 */
@@ -82,6 +85,19 @@ public class BeadedImage {
 		this.colors_used = new HashSet<String>();
 	}
 	
+	public void generatePattern(BufferedImage source, BeadPallete pallete, float text_size) throws IOException {
+		this.image = source;
+		this.pallete = pallete;
+		this.text_size = text_size;
+		
+		//Calculate the pegboard size based in the image size.
+		this.pattern_size = new Dimension();
+		this.pattern_size.setSize(Math.ceil(source.getWidth()/29d),
+								  Math.ceil(source.getHeight()/29d));
+		
+		this.createThumbnail(source, pallete);
+		this.createThumbnailPegboards(source, pallete, text_size);
+	}
 	
 	public void generateBeadSet(BufferedImage source, BeadPallete pallete, float text_size) throws IOException {
 		this.colors_used.clear();
@@ -126,7 +142,22 @@ public class BeadedImage {
 		return list.split("\n");
 	}
 	
-	public ImageIcon getPegboard (int x, int y) {
+	public ImageIcon getPegboard (int x, int y) throws IOException{
+		if (this.board_pattern.get(this.getCoordinate(x, y)) == null){
+			
+			this.board_pattern.set(this.getCoordinate(x, y), (File.createTempFile(this.TEMP_PREFFIX+"pegboard-"+this.getCoordinate(x, y)+"-",
+					   this.TEMP_SUFFIX)));
+			this.board_pattern.get(this.getCoordinate(x, y)).deleteOnExit();
+			
+			Rectangle rectangle = new Rectangle(x*29,y*29,
+					 (x*29 +28>= this.image.getWidth())? this.image.getWidth()-x*29 : 29,
+					 (y*29 +28>= this.image.getHeight())? this.image.getHeight()-y*29 : 29);
+			
+			ImageIO.write(this.generateImage(this.image, pallete, new Dimension(29,29), rectangle, false, text_size),
+				      this.TEMP_SUFFIX, 
+				      this.board_pattern.get(this.getCoordinate(x, y)));
+		}
+		
 		return new ImageIcon(this.board_pattern.get(this.getCoordinate(x, y)).getPath());
 	}
 	
@@ -227,6 +258,47 @@ public class BeadedImage {
 				this.TEMP_SUFFIX,
 				this.thumbnail);
 	}
+	
+	private void createThumbnailPegboards(BufferedImage source, BeadPallete pallete, float text_size) throws IOException {
+		
+		// Delete already existing temp from the pegboards ArrayList.
+		for(File board: this.board_pattern){
+			board.delete();
+		}
+		
+		for(File thumbnail: this.pegboard_thumbnail){
+			thumbnail.delete();
+		}
+		
+		// Clear the ArrayLists. 
+		this.board_pattern.clear();
+		this.pegboard_thumbnail.clear();
+		
+		// Declare Rectangle used for beading.
+		Rectangle rectangle;
+		
+		for(int y = 0; y < this.pattern_size.getHeight(); y ++) {
+			for(int x = 0; x < this.pattern_size.getWidth(); x ++) {
+				
+				// Create temporal file to store the pattern
+				this.board_pattern.add(null);
+				
+				this.pegboard_thumbnail.add(File.createTempFile(this.TEMP_PREFFIX+"pegboard_thumbnail-"+this.getCoordinate(x, y)+"-",
+						   this.TEMP_SUFFIX));
+				this.pegboard_thumbnail.get(this.getCoordinate(x, y)).deleteOnExit();
+				
+				
+				rectangle = new Rectangle(x*29,y*29,
+										 (x*29 +28>= source.getWidth())? source.getWidth()-x*29 : 29,
+										 (y*29 +28>= source.getHeight())? source.getHeight()-y*29 : 29);
+				
+				ImageIO.write(this.generateImage(source, pallete, new Dimension(29,29), rectangle, true, text_size),
+					      this.TEMP_SUFFIX, 
+					      this.pegboard_thumbnail.get(this.getCoordinate(x, y)));
+			}
+		}
+	}
+	
 	
 	private void createPegboards(BufferedImage source, BeadPallete pallete, float text_size) throws IOException {
 		

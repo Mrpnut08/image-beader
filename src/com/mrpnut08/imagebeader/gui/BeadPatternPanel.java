@@ -103,7 +103,7 @@ public class BeadPatternPanel extends JPanel implements ActionListener, Pegboard
 		// Attempt to generate the bead pattern 
 		try {
 			
-			this.pattern.generateBeadSet(image, pallete, text_size);
+			this.pattern.generatePattern(image, pallete, text_size);
 		
 			// Enable Buttons.
 			this.pattern_details.setEnabled(true);
@@ -145,8 +145,14 @@ public class BeadPatternPanel extends JPanel implements ActionListener, Pegboard
 
 	@Override
 	public void onPegboardSwitch(Point index) {
-		this.pegboard_index = index;
-		this.image_view.setIcon(this.pattern.getPegboard(index.x, index.y));
+		
+		try {
+			this.pegboard_index = index;
+			this.image_view.setIcon(this.pattern.getPegboard(index.x, index.y));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override
