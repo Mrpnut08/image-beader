@@ -263,7 +263,9 @@ public class BeadedImage {
 		
 		// Delete already existing temp from the pegboards ArrayList.
 		for(File board: this.board_pattern){
+			if (board != null) {
 			board.delete();
+			}
 		}
 		
 		for(File thumbnail: this.pegboard_thumbnail){
