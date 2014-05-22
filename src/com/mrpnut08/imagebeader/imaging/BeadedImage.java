@@ -90,6 +90,9 @@ public class BeadedImage {
 		this.pallete = pallete;
 		this.text_size = text_size;
 		
+		//Clear the color List.
+		this.colors_used.clear();
+		
 		//Calculate the pegboard size based in the image size.
 		this.pattern_size = new Dimension();
 		this.pattern_size.setSize(Math.ceil(source.getWidth()/29d),
