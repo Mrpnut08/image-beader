@@ -20,7 +20,6 @@
 package com.mrpnut08.imagebeader;
 
 import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 
 import com.mrpnut08.imagebeader.gui.MainScreen;
 

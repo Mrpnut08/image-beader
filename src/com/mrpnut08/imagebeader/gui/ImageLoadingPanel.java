@@ -50,11 +50,12 @@ public class ImageLoadingPanel extends JPanel implements ActionListener {
 	private JLabel image;
 	private OnImageLoadListener listener;
 	private UnbeadedImage source;
-
+	private StatusBar statusbar;
+	
 	/**
 	 * Creates the Panel and its content.
 	 */
-	public ImageLoadingPanel(OnImageLoadListener listener) {
+	public ImageLoadingPanel(OnImageLoadListener listener, StatusBar statusbar) {
 		// Instantiate the JPanel super-class.
 		super();
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -62,6 +63,9 @@ public class ImageLoadingPanel extends JPanel implements ActionListener {
 		// Set OnImageLoadListener
 		this.listener = listener;
 
+		// Set StatusBar.
+		this.statusbar = statusbar;
+		
 		// Create the file path label
 		this.image = new JLabel("No File Selected");
 		this.image.setAlignmentX(CENTER_ALIGNMENT);
@@ -88,6 +92,9 @@ public class ImageLoadingPanel extends JPanel implements ActionListener {
 	 */
 	@Override
 	public void actionPerformed(ActionEvent action) {
+		
+		this.statusbar.updateStatus(false, "Choosing a file to load");
+		
 		// Create file chooser window.
 		JFileChooser filebrowser = new JFileChooser();
 
@@ -102,12 +109,18 @@ public class ImageLoadingPanel extends JPanel implements ActionListener {
 		// listener.
 		try {
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
+			
+			this.statusbar.updateStatus(true, "Loading file");
+			
 			this.source.loadImage(filebrowser.getSelectedFile());
 			this.image.setText(filebrowser.getSelectedFile().getName());
 			this.loadPreviewImage();
 			this.listener.onImageLoad(this.source.getFilePath());
+		} else {
+			this.statusbar.updateStatus(false, "File load cancelled");
 		}
 		} catch (IOException io_error) {
+			this.statusbar.updateStatus(false, "Failed to load file");
 			JOptionPane.showMessageDialog(this, io_error.getMessage());
 		}
 	}

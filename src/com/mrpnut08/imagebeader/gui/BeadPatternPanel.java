@@ -61,7 +61,9 @@ public class BeadPatternPanel extends JPanel implements ActionListener, Pegboard
 	
 	private Point pegboard_index;
 	
-	public BeadPatternPanel (Frame parent){
+	private StatusBar statusbar;
+	
+	public BeadPatternPanel (Frame parent, StatusBar statusbar){
 		
 		// Call super class constructor to initialize JPanel.
 		super();
@@ -70,6 +72,9 @@ public class BeadPatternPanel extends JPanel implements ActionListener, Pegboard
 
 		// Store parent Frame used for calling the dialogs.
 		this.parent = parent;
+		
+		// Store the statusbar to update the status.
+		this.statusbar = statusbar;
 		
 		// Getting ready the BeadedImage class.
 		this.pattern = new BeadedImage();
@@ -105,6 +110,8 @@ public class BeadPatternPanel extends JPanel implements ActionListener, Pegboard
 	
 	public void generatePattern (BufferedImage image, BeadPallete pallete, float text_size) {
 		
+		this.statusbar.updateStatus(true, "Generating Pattern");
+		
 		new PatternGeneratorWorker(this, this.pattern, image, pallete, text_size).execute();
 	}
 	
@@ -134,6 +141,7 @@ public class BeadPatternPanel extends JPanel implements ActionListener, Pegboard
 
 	@Override
 	public void onPegboardSwitch(Point index) {
+		this.statusbar.updateStatus(true, "Loading pegboard " + (index.x+1) + ", " + (index.y+1));
 		new PegboardLoadWorker(this, this.pattern, index.x, index.y).execute();
 	}
 
@@ -146,6 +154,8 @@ public class BeadPatternPanel extends JPanel implements ActionListener, Pegboard
 	public void onPegboardLoad(ImageIcon icon, Point index) {
 		this.pegboard_index = index;
 		this.image_view.setIcon(icon);
+		
+		this.statusbar.updateStatus(false, "Loaded pegboard at " + (index.x+1) + ", " + (index.y+1));
 	}
 
 	@Override
@@ -155,6 +165,8 @@ public class BeadPatternPanel extends JPanel implements ActionListener, Pegboard
 		this.pattern_details.setEnabled(true);
 		this.pegboard_switcher.setEnabled(true);
 					
+		this.statusbar.updateStatus(false, "Finished pattern");
+		
 		//load the pegboard (0,0).
 		this.onPegboardSwitch(new Point(0,0));
 	}

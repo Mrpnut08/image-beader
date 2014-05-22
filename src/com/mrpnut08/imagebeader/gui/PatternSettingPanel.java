@@ -39,6 +39,8 @@ import com.mrpnut08.imagebeader.imaging.BeadedImage;
 
 public class PatternSettingPanel extends JPanel implements ActionListener{
 
+	private static final long serialVersionUID = 1L;
+	
 	private float textsize;
 	private JRadioButton fullsizeradio,
 						 resizedradio;

@@ -28,7 +28,9 @@ import javax.swing.JProgressBar;
 import javax.swing.border.BevelBorder;
 
 public class StatusBar extends JPanel {
-
+	
+	private static final long serialVersionUID = 1L;
+	
 	private JLabel text;
 	private JProgressBar progressbar;
 	
@@ -44,7 +46,8 @@ public class StatusBar extends JPanel {
 		this.add(progressbar);
 	}
 	
-	public void setText(String text) {
+	public void updateStatus(boolean active, String text) {
+		this.progressbar.setIndeterminate(active);
 		this.text.setText(text);
 	}
 	

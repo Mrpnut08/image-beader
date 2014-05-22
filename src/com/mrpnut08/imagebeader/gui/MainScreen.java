@@ -44,6 +44,8 @@ import com.mrpnut08.imagebeader.listener.OnImageLoadListener;
   */
 public class MainScreen extends JFrame implements ActionListener,
 												  OnImageLoadListener {
+	
+	private static final long serialVersionUID = 1L;
 
 	private BeadPallete pallete;
 	
@@ -87,15 +89,17 @@ public class MainScreen extends JFrame implements ActionListener,
 	}
 
 	private void generateGUIContent() {
-		this.result_panel = new BeadPatternPanel(this);
+		
+		this.statusbar = new StatusBar();
+		this.add(statusbar,BorderLayout.SOUTH);
+		
+		this.result_panel = new BeadPatternPanel(this,this.statusbar);
 		
 		JSplitPane root_content_pane = new JSplitPane(
 				JSplitPane.HORIZONTAL_SPLIT, this.generateOptionPanel(),
 				this.result_panel);
 		this.add(root_content_pane);
 		
-		this.statusbar = new StatusBar();
-		this.add(statusbar,BorderLayout.SOUTH);
 	}
 
 	/** Creates the pattern option panel which holds the pattern generation options.
@@ -109,7 +113,7 @@ public class MainScreen extends JFrame implements ActionListener,
 		panel.setMinimumSize(new Dimension(225, 480));
 
 		// Create ImageLoadingPanel.
-		this.image_loader = new ImageLoadingPanel(this);
+		this.image_loader = new ImageLoadingPanel(this, this.statusbar);
 		panel.add(this.image_loader);
 	
 		// Create PatternSettingPanel which handles the settings the user 
@@ -137,6 +141,6 @@ public class MainScreen extends JFrame implements ActionListener,
 	public void onImageLoad(String filepath) {
 			this.beading_button.setEnabled(true);
 			this.settings_panel.SetImageSize(this.image_loader.getImageDimensions());
-			this.statusbar.setText("Image Loaded");
+			this.statusbar.updateStatus(false, "Image Loaded");
 	}
 }
