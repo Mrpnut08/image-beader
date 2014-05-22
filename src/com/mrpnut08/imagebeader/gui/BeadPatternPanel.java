@@ -22,7 +22,6 @@ package com.mrpnut08.imagebeader.gui;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Frame;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -57,13 +56,13 @@ public class BeadPatternPanel extends JPanel implements ActionListener, Pegboard
 	
 	private BeadedImage pattern;
 	
-	private Frame parent;
+	private MainScreen parent;
 	
 	private Point pegboard_index;
 	
 	private StatusBar statusbar;
 	
-	public BeadPatternPanel (Frame parent, StatusBar statusbar){
+	public BeadPatternPanel (MainScreen parent, StatusBar statusbar){
 		
 		// Call super class constructor to initialize JPanel.
 		super();
@@ -109,7 +108,7 @@ public class BeadPatternPanel extends JPanel implements ActionListener, Pegboard
 	}
 	
 	public void generatePattern (BufferedImage image, BeadPallete pallete, float text_size) {
-		
+		this.parent.enableBeading(false);
 		this.statusbar.updateStatus(true, "Generating Pattern");
 		
 		new PatternGeneratorWorker(this, this.pattern, image, pallete, text_size).execute();
@@ -159,7 +158,7 @@ public class BeadPatternPanel extends JPanel implements ActionListener, Pegboard
 	}
 
 	@Override
-	public void generationResutlts() {
+	public void generationResults() {
 		
 		// Enable Buttons.
 		this.pattern_details.setEnabled(true);
@@ -169,5 +168,12 @@ public class BeadPatternPanel extends JPanel implements ActionListener, Pegboard
 		
 		//load the pegboard (0,0).
 		this.onPegboardSwitch(new Point(0,0));
+		
+		this.parent.enableBeading(true);
+	}
+
+	@Override
+	public void generationFailed() {
+		this.parent.enableBeading(true);
 	}
 }

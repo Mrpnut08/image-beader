@@ -71,7 +71,7 @@ public class PatternGeneratorWorker extends SwingWorker<Void, Void> {
 		if (error) {
 			JOptionPane.showMessageDialog(null, errormessage);
 		} else {
-			listener.generationResutlts();
+			listener.generationResults();
 		}
 	}
 }

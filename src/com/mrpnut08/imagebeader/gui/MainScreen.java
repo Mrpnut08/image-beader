@@ -46,7 +46,7 @@ public class MainScreen extends JFrame implements ActionListener,
 												  OnImageLoadListener {
 	
 	private static final long serialVersionUID = 1L;
-
+ 
 	private BeadPallete pallete;
 	
 	private JButton beading_button;
@@ -78,14 +78,15 @@ public class MainScreen extends JFrame implements ActionListener,
 		if (this.image_loader.getFilePath().isEmpty()) {
 			JOptionPane.showMessageDialog(this, "No Image has been loaded",
 					"Error", JOptionPane.ERROR_MESSAGE);
-			return;
-		}
-		BufferedImage image = (this.settings_panel.needResizing())? this.image_loader.getScaledImage(this.settings_panel.getResizeSize()) :
+		
+		} else {
+			BufferedImage image = (this.settings_panel.needResizing())? this.image_loader.getScaledImage(this.settings_panel.getResizeSize()) :
 																	this.image_loader.getImage();
 		
-		this.result_panel.generatePattern(image,
-										  this.pallete, 
-										  this.settings_panel.getTextSize());
+			this.result_panel.generatePattern(image,
+										  	  this.pallete, 
+										  	  this.settings_panel.getTextSize());
+		}
 	}
 
 	private void generateGUIContent() {
@@ -142,5 +143,10 @@ public class MainScreen extends JFrame implements ActionListener,
 			this.beading_button.setEnabled(true);
 			this.settings_panel.SetImageSize(this.image_loader.getImageDimensions());
 			this.statusbar.updateStatus(false, "Image Loaded");
+	}
+
+	public void enableBeading(boolean bool) {
+		
+		this.beading_button.setEnabled(bool);
 	}
 }
