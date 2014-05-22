@@ -17,36 +17,13 @@
  * along with image-beader.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.mrpnut08.imagebeader.gui;
+package com.mrpnut08.imagebeader.listener;
 
-import java.awt.FlowLayout;
+import java.awt.Point;
 
-import javax.swing.BorderFactory;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JProgressBar;
-import javax.swing.border.BevelBorder;
+import javax.swing.ImageIcon;
 
-public class StatusBar extends JPanel {
-
-	private JLabel text;
-	private JProgressBar progressbar;
+public interface PegboardLoadWorkerListener {
 	
-	public StatusBar() {
-		super(new FlowLayout(FlowLayout.TRAILING));
-		
-		this.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
-		
-		text = new JLabel("Welcome");
-		this.add(text);
-		
-		progressbar = new JProgressBar();
-		this.add(progressbar);
-	}
-	
-	public void setText(String text) {
-		this.text.setText(text);
-	}
-	
-	
+	public void onPegboardLoad(ImageIcon icon, Point index);
 }

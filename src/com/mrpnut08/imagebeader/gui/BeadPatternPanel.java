@@ -31,6 +31,7 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -39,9 +40,13 @@ import javax.swing.JScrollPane;
 
 import com.mrpnut08.imagebeader.beads.BeadPallete;
 import com.mrpnut08.imagebeader.imaging.BeadedImage;
+import com.mrpnut08.imagebeader.listener.PatternGeneratorListener;
+import com.mrpnut08.imagebeader.listener.PegboardLoadWorkerListener;
 import com.mrpnut08.imagebeader.listener.PegboardSwitcherListener;
+import com.mrpnut08.imagebeader.workers.PatternGeneratorWorker;
+import com.mrpnut08.imagebeader.workers.PegboardLoadWorker;
 
-public class BeadPatternPanel extends JPanel implements ActionListener, PegboardSwitcherListener{
+public class BeadPatternPanel extends JPanel implements ActionListener, PegboardSwitcherListener, PegboardLoadWorkerListener, PatternGeneratorListener{
 
 	private static final long serialVersionUID = 1L;
 	
@@ -100,23 +105,7 @@ public class BeadPatternPanel extends JPanel implements ActionListener, Pegboard
 	
 	public void generatePattern (BufferedImage image, BeadPallete pallete, float text_size) {
 		
-		// Attempt to generate the bead pattern 
-		try {
-			
-			this.pattern.generatePattern(image, pallete, text_size);
-		
-			// Enable Buttons.
-			this.pattern_details.setEnabled(true);
-			this.pegboard_switcher.setEnabled(true);
-			
-			//load the pegboard (0,0).
-			this.onPegboardSwitch(new Point(0,0));
-			
-		// Show error dialog if anything happens
-		} catch (IOException io_err) {
-			JOptionPane.showMessageDialog(this, io_err.getMessage());
-		}
-		
+		new PatternGeneratorWorker(this, this.pattern, image, pallete, text_size).execute();
 	}
 	
 	public void actionPerformed(ActionEvent e) {
@@ -145,18 +134,28 @@ public class BeadPatternPanel extends JPanel implements ActionListener, Pegboard
 
 	@Override
 	public void onPegboardSwitch(Point index) {
-		
-		try {
-			this.pegboard_index = index;
-			this.image_view.setIcon(this.pattern.getPegboard(index.x, index.y));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		new PegboardLoadWorker(this, this.pattern, index.x, index.y).execute();
 	}
 
 	@Override
 	public File getPegboardThumbnail(int x, int y) {
 		return this.pattern.getPegboardThumbnail(x, y);
+	}
+
+	@Override
+	public void onPegboardLoad(ImageIcon icon, Point index) {
+		this.pegboard_index = index;
+		this.image_view.setIcon(icon);
+	}
+
+	@Override
+	public void generationResutlts() {
+		
+		// Enable Buttons.
+		this.pattern_details.setEnabled(true);
+		this.pegboard_switcher.setEnabled(true);
+					
+		//load the pegboard (0,0).
+		this.onPegboardSwitch(new Point(0,0));
 	}
 }
