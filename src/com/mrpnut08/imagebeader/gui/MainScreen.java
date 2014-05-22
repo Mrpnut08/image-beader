@@ -19,7 +19,9 @@
 
 package com.mrpnut08.imagebeader.gui;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -50,7 +52,8 @@ public class MainScreen extends JFrame implements ActionListener,
 	private ImageLoadingPanel image_loader;
 	private BeadPatternPanel result_panel;
 	private PatternSettingPanel settings_panel;
-
+	private StatusBar statusbar;
+	
 	public MainScreen() {
 		super("Image Beader");
 		this.setMinimumSize(new Dimension(640, 480));
@@ -91,6 +94,9 @@ public class MainScreen extends JFrame implements ActionListener,
 				JSplitPane.HORIZONTAL_SPLIT, this.generateOptionPanel(),
 				this.result_panel);
 		this.add(root_content_pane);
+		
+		this.statusbar = new StatusBar();
+		//this.add(statusbar,BorderLayout.SOUTH);
 	}
 
 	/** Creates the pattern option panel which holds the pattern generation options.
@@ -114,6 +120,10 @@ public class MainScreen extends JFrame implements ActionListener,
 		
 		// Create the "Generate Bead Pattern" button.
 		this.beading_button = new JButton("Generate Bead Pattern");
+		
+		Font font = this.beading_button.getFont().deriveFont(this.beading_button.getFont().getSize()*1.5f);
+		this.beading_button.setFont(font);
+		
 		this.beading_button.setAlignmentX(CENTER_ALIGNMENT);
 		this.beading_button.setActionCommand("BeadImage");
 		this.beading_button.addActionListener(this);
