@@ -78,13 +78,12 @@ public class MainScreen extends JFrame implements ActionListener,
 					"Error", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
-		
 		BufferedImage image = (this.settings_panel.needResizing())? this.image_loader.getScaledImage(this.settings_panel.getResizeSize()) :
 																	this.image_loader.getImage();
 		
 		this.result_panel.generatePattern(image,
 										  this.pallete, 
-										  this.settings_panel.getTextSize());		
+										  this.settings_panel.getTextSize());
 	}
 
 	private void generateGUIContent() {
@@ -96,7 +95,7 @@ public class MainScreen extends JFrame implements ActionListener,
 		this.add(root_content_pane);
 		
 		this.statusbar = new StatusBar();
-		//this.add(statusbar,BorderLayout.SOUTH);
+		this.add(statusbar,BorderLayout.SOUTH);
 	}
 
 	/** Creates the pattern option panel which holds the pattern generation options.
@@ -138,5 +137,6 @@ public class MainScreen extends JFrame implements ActionListener,
 	public void onImageLoad(String filepath) {
 			this.beading_button.setEnabled(true);
 			this.settings_panel.SetImageSize(this.image_loader.getImageDimensions());
+			this.statusbar.setText("Image Loaded");
 	}
 }
