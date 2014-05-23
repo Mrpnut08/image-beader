@@ -66,7 +66,7 @@ public class MainScreen extends JFrame implements ActionListener,
 			this.pallete = new BeadPallete(
 					new File(this.getClass().getClassLoader().getResource("./perler_pallete.xml").toURI()));
 		} catch (Exception io_error) {
-			JOptionPane.showMessageDialog(this, io_error.getMessage());
+			JOptionPane.showMessageDialog(this, "Could not find the bead pallete file (perler_pallete.xml)", "Error", JOptionPane.ERROR_MESSAGE);
 		} // ~try
 
 		// Generate the GUI interface content.
