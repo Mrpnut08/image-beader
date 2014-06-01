@@ -65,19 +65,20 @@ public class BeadPallete {
 			if (minimal > distance) {
 			 minimal = distance;
 			 color = current;
-		 }
+			}
 		}
 	
 		return color;
 	}
 	
 	private double findDistance (Color color1, Color color2) {
-		double difference;
-		difference = Math.pow(color1.getRed() - color2.getRed(), 2)
-		 		   + Math.pow(color1.getGreen() - color2.getGreen(), 2)
-		 		   + Math.pow(color1.getBlue() - color2.getBlue(), 2);
-		difference = Math.sqrt(difference);
-		return difference;
+		
+		double difference2 = Math.pow(color1.getRed() - color2.getRed(), 2)
+		 		   		   + Math.pow(color1.getGreen() - color2.getGreen(), 2)
+		 		   		   + Math.pow(color1.getBlue() - color2.getBlue(), 2);
+		
+		difference2 = Math.sqrt(difference2);
+		return difference2;
 	}
 	
 }
