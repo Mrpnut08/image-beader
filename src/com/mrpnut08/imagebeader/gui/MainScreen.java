@@ -30,6 +30,7 @@ import java.io.File;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
@@ -62,6 +63,7 @@ public class MainScreen extends JFrame implements ActionListener,
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setResizable(true);
 
+		//Attempt to load the perler pallete file.
 		try {
 			this.pallete = new BeadPallete(
 					new File(this.getClass().getClassLoader().getResource("./perler_pallete.xml").toURI()));
@@ -101,8 +103,17 @@ public class MainScreen extends JFrame implements ActionListener,
 				this.result_panel);
 		this.add(root_content_pane);
 		
+		this.generateMenu();
 	}
 
+	
+	private void generateMenu(){
+		
+		JMenuBar menubar = new JMenuBar();
+		
+		this.setJMenuBar(menubar);
+	}
+	
 	/** Creates the pattern option panel which holds the pattern generation options.
 	  * 
 	  * @return the left panel of the split view.
