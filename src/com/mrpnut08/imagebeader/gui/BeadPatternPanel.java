@@ -54,6 +54,9 @@ public class BeadPatternPanel extends JPanel implements ActionListener, Pegboard
 	private JButton pattern_details,
 					pegboard_switcher;
 	
+	private PatternDetailsDialog details_dialog;
+	private SwitchPegboardDialog switcher_dialog;
+	
 	private BeadedImage pattern;
 	
 	private MainScreen parent;
@@ -121,19 +124,34 @@ public class BeadPatternPanel extends JPanel implements ActionListener, Pegboard
 		
 		// Open pattern details window if the pattern datails button was pressed.
 		case "PatternDetails":
-			try {
-			PreviewImageIcon thumbnail = new PreviewImageIcon();
-			thumbnail.setImage(ImageIO.read(this.pattern.getPatternThumbnail()));
+			if  (this.details_dialog == null){
+				try {
+					PreviewImageIcon thumbnail = new PreviewImageIcon();
+					thumbnail.setImage(ImageIO.read(this.pattern.getPatternThumbnail()));
 			
-			new PatternDetailsDialog(this.parent, thumbnail, this.pattern.getUsedColorList()).setVisible(true);
-			} catch (IOException io_err) {
-				JOptionPane.showMessageDialog(this, io_err.getMessage());
+					this.details_dialog = new PatternDetailsDialog(this.parent, thumbnail, this.pattern.getUsedColorList());
+					
+				} catch (IOException io_err) {
+					JOptionPane.showMessageDialog(this, io_err.getMessage());
+				}
 			}
+				
+			this.details_dialog.setVisible(true);
+			this.details_dialog.requestFocus();
+			
 		break;
 		
 		// if the pegboard switcher button was pressed.
 		case "SwitchPegboard":
-			new SwitchPegboardDialog(this, this.parent,this.pattern.getSize(),this.pegboard_index).setVisible(true);
+			if (this.switcher_dialog == null){
+				this.switcher_dialog = new SwitchPegboardDialog(this, this.parent,this.pattern.getSize(),this.pegboard_index);
+				this.switcher_dialog.setVisible(true);
+				
+			}
+			
+			this.switcher_dialog.setVisible(true);
+			this.switcher_dialog.requestFocus();
+			
 		break;
 		}
 	}
@@ -159,6 +177,9 @@ public class BeadPatternPanel extends JPanel implements ActionListener, Pegboard
 
 	@Override
 	public void generationResults() {
+		
+		this.switcher_dialog = null;
+		this.details_dialog = null;
 		
 		// Enable Buttons.
 		this.pattern_details.setEnabled(true);
