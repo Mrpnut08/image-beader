@@ -30,9 +30,12 @@ import java.io.File;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JSeparator;
 import javax.swing.JSplitPane;
 
 import com.mrpnut08.imagebeader.beads.BeadPallete;
@@ -77,17 +80,25 @@ public class MainScreen extends JFrame implements ActionListener,
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (this.image_loader.getFilePath().isEmpty()) {
-			JOptionPane.showMessageDialog(this, "No Image has been loaded",
-					"Error", JOptionPane.ERROR_MESSAGE);
 		
-		} else {
-			BufferedImage image = (this.settings_panel.needResizing())? this.image_loader.getScaledImage(this.settings_panel.getResizeSize()) :
-																	this.image_loader.getImage();
+		switch(e.getActionCommand()){
+			case ("BeadImage"):
+				if (this.image_loader.getFilePath().isEmpty()) {
+					JOptionPane.showMessageDialog(this, "No Image has been loaded",
+							"Error", JOptionPane.ERROR_MESSAGE);
 		
-			this.result_panel.generatePattern(image,
-										  	  this.pallete, 
-										  	  this.settings_panel.getTextSize());
+				} else {
+					BufferedImage image = (this.settings_panel.needResizing())? this.image_loader.getScaledImage(this.settings_panel.getResizeSize()) :
+										   this.image_loader.getImage();
+		
+					this.result_panel.generatePattern(image,
+													  this.pallete, 
+													  this.settings_panel.getTextSize());
+				}
+			break;
+			
+			case ("Exit"):
+				this.dispose();
 		}
 	}
 
@@ -110,6 +121,24 @@ public class MainScreen extends JFrame implements ActionListener,
 	private void generateMenu(){
 		
 		JMenuBar menubar = new JMenuBar();
+		
+		JMenu file = new JMenu("File");
+		
+		JMenuItem load_image = new JMenuItem("Load Image");
+		load_image.addActionListener(image_loader);
+		file.add(load_image);
+		
+		file.add(new JSeparator());
+		
+		JMenuItem exit = new JMenuItem("Exit");
+		exit.setActionCommand("Exit");
+		exit.addActionListener(this);
+		file.add(exit);
+		
+		menubar.add(file);
+		
+		JMenu about = new JMenu("About");
+		menubar.add(about);
 		
 		this.setJMenuBar(menubar);
 	}
