@@ -97,6 +97,18 @@ public class MainScreen extends JFrame implements ActionListener,
 				}
 			break;
 			
+			case("About"):
+				String text= "Image Beader \n"
+						   + "The open source perler image beading program. \n\n"
+						   + "Copyright (C) 2014 Alfredo Giscombe (mrpnut08) \n"
+						   + "This program is free software: you can redistribute it and/or modify\n"
+						   + "it under the terms of the GNU General Public License as published by\n"
+						   + "the Free Software Foundation, either version 3 of the License, or\n"
+						   + "(at your option) any later version.";
+			
+				JOptionPane.showMessageDialog(this, text, "About Image Beader", JOptionPane.INFORMATION_MESSAGE);
+			break;
+			
 			case ("Exit"):
 				this.dispose();
 		}
@@ -139,6 +151,11 @@ public class MainScreen extends JFrame implements ActionListener,
 		
 		JMenu about = new JMenu("About");
 		menubar.add(about);
+		
+		JMenuItem abtib = new JMenuItem("Image Beader");
+		abtib.setActionCommand("About");
+		abtib.addActionListener(this);
+		about.add(abtib);
 		
 		this.setJMenuBar(menubar);
 	}
